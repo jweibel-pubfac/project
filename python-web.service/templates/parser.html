@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>在线爬虫</title>
+    </head>
+	<body background="http://pic.pp3.cn/uploads//allimg/111122/112U12H1-2.jpg">
+		<div style="left: 50px; position: absolute; top: 20px;">
+		<form action="/myparser" method="post">
+			标签:<p><input name="tag"></p>
+                        <p><button type="submit">添加标签</button></p>
+		</form>
+                标签：
+                {% for tag in tags %}
+                {{tag}}
+                {% end %}
+                </br></br></br>上传html 或输入网址
+                <form action="/myparser" enctype="multipart/form-data" method="post">
+                <br>html：<input type="file" name="upload"/><br/>
+                <p><input name="targer">
+		<input type="submit" value="开始爬取"/>
+                </form>
+
+            <ul>爬取结果：
+            {% for results in result %}
+            {{results}}
+            {% end %}
+        </ul>
+        </div>
+    </body>
+</html>
