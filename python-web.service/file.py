@@ -26,13 +26,14 @@ def decode(s):
     except UnicodeDecodeError:
         return s.decode('gbk')
 
+#在线python生成临时文件
 def write_py(code):
     fpath = os.path.join(TEMP, 'pyonline.py')
     with open(fpath, 'w', encoding='utf-8') as f:
         f.write(code)
     print('Code wrote to: %s' % fpath)
     return fpath
-
+#处理文件上传
 class Upload(tornado.web.RequestHandler):
 
     def post(self):
@@ -54,6 +55,8 @@ class Upload(tornado.web.RequestHandler):
             files = getfiles()
             files.sort()
             self.render("file.html", filelist=files)
+
+#处理在线爬虫
 class parser(HTMLParser):
     a_text = False
     def __init__(self):   
@@ -72,8 +75,10 @@ class parser(HTMLParser):
     def handle_data(self,data):  
         if self.a_text:  
             self.ddata.append(data)
+
 hp = parser()
  
+#处理下载
 class Download(tornado.web.RequestHandler):
 
     def get(self):
@@ -92,7 +97,7 @@ class Download(tornado.web.RequestHandler):
                 self.write("data")
         self.finish()
 
-
+#处理删除操作
 class Delete(tornado.web.RequestHandler):
 
     def get(self):
@@ -102,18 +107,6 @@ class Delete(tornado.web.RequestHandler):
         files.sort()
         self.render("file.html", filelist=files)
 
-
-class Index(tornado.web.RequestHandler):
-    def get(self):
-        self.render("index.html")
-class Fileshare(tornado.web.RequestHandler):
-    def get(self):
-        files = getfiles()
-        files.sort()
-        self.render("file.html", filelist=files)
-class Shell(tornado.web.RequestHandler):
-    def get(self):
-        self.render("shell.html")
 class Shellstart(tornado.web.RequestHandler):
     def post(self):
         shell=self.get_argument("shell")
@@ -155,14 +148,7 @@ class Myparser(tornado.web.RequestHandler):
                         hp.ttag=[]
                         hp.ddata=[]
                         self.render("parser.html",result=[],tags=[])
- 
 
-class parserindex(tornado.web.RequestHandler):
-    def get(self):
-        self.render("parser.html",result=[],tags=[])
-class Pyonline(tornado.web.RequestHandler):
-    def get(self):
-        self.render("python.html")
 class Runpython(tornado.web.RequestHandler):
     def post(self):
         codes=self.get_argument("code") 
@@ -174,6 +160,30 @@ class Runpython(tornado.web.RequestHandler):
             r['output'] = decode(subprocess.check_output(['/usr/bin/python2', path], stderr=subprocess.STDOUT, timeout=15))
             self.render("result.html",results=r['output'])
 
+
+#返回页面 
+class Index(tornado.web.RequestHandler):
+    def get(self):
+        self.render("index.html")
+class Fileshare(tornado.web.RequestHandler):
+    def get(self):
+        files = getfiles()
+        files.sort()
+        self.render("file.html", filelist=files)
+class Shell(tornado.web.RequestHandler):
+    def get(self):
+        self.render("shell.html")
+
+class parserindex(tornado.web.RequestHandler):
+    def get(self):
+        self.render("parser.html",result=[],tags=[])
+class Pyonline(tornado.web.RequestHandler):
+    def get(self):
+        self.render("python.html")
+
+
+
+#获得已上传文件信息
 def getfiles():
     filels = []
     filespath = "/root/folder/python/files"
