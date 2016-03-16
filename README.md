@@ -15,3 +15,9 @@ change.html<br>
 > 实现文本转为html文件<br>
 > 自动判断应该使用标签<br>
 > 仿照教程所写，加入了个人注释<br>
+
+ShootGame<br>
+> 灰机大战<br>
+> pygame模块所写<br>
+> 加入生命数、boss、敌机、游戏等级<br>
+> 更多元素完善中<br>
