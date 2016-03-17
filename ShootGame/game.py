@@ -97,12 +97,13 @@ class boss(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         self.image = enemy_img
         self.rect = self.image.get_rect()
-        self.rect.topleft = init_pos
+        self.rect.bottomleft = init_pos
 
         self.down_imgs = enemy_down_imgs
-        self.speed = randrange(2)
+        self.speed = randrange(1)
         self.down_index = 0
-        self.life=30
+        self.life=500
+        self.time=0
         if self.rect.left<SCREEN_WIDTH/2:
             self.goleft= False
         else:
@@ -123,7 +124,11 @@ class boss(pygame.sprite.Sprite):
             self.rect.left -=  self.speed
         else:
             self.rect.left += self.speed
-         
+        if  (self.rect.top<0 and self.time>9):
+            self.rect.top+=1
+        self.time+=1
+        if self.time>10:
+            self.time=0
 
 
 class EnBullet(pygame.sprite.Sprite):
@@ -194,26 +199,36 @@ bullet_img = plane_img.subsurface(bullet_rect)
 
 enemy1_rect = pygame.Rect(534, 612, 57, 43)
 enemy1_img = plane_img.subsurface(enemy1_rect)
-enemy2_rect=pygame.Rect(0,482,162,252)
+enemy2_rect=pygame.Rect(163,753,165,239)
 enemy2_img = plane_img.subsurface(enemy2_rect)
 enemy1_down_imgs = []
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(267, 347, 57, 43)))
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(873, 697, 57, 43)))
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(267, 296, 57, 43)))
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(930, 697, 57, 43)))
+
+enemy2_down_imgs=[]
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(3, 487, 164, 238)))
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(3, 227, 165, 237)))
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(841, 750, 162, 238)))
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(166, 488, 162, 246)))
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(673, 750, 165, 249)))
+enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(0, 760, 149, 199)))
+
 #不同的boss
 
 enemies1 = pygame.sprite.Group()
 #生成的敌机
 Enemybullets=pygame.sprite.Group()
 enemies_down = pygame.sprite.Group()
+boss_down = pygame.sprite.Group()
 enemies2=pygame.sprite.Group()
 #消灭的敌机
 
 shoot_frequency = 0
 enemy_frequency = 0
 enshoot_frequency = 0
-boss_frequency=0
+boss_frequency=1
 boss_shoot=0
 
 player_down_index = 16
@@ -270,7 +285,7 @@ while running:
         enshoot_frequency=0
 
 
-    if boss_shoot % (50-10*level)== 0:
+    if boss_shoot % (100-10*level)== 0:
         try:
             for i in enemies2:
                 i.shoot(bullet_img)
@@ -278,7 +293,7 @@ while running:
             pass
 
     boss_shoot+=1
-    if boss_shoot >= (50-10*level):
+    if boss_shoot >= (100-10*level):
         boss_shoot=0
 #控制生成敌机、boss、子弹的频率  ------------------------------------------------------------------------------------------------------
 
@@ -336,6 +351,7 @@ while running:
                 player.bullets.remove(bulletss)
  
                 if bosses.life<=0:
+                    boss_down.add(bosses)
                     enemies2.remove(bosses)    
 #触发事件，如果相撞   ----------------------------------------------------------------------------
     screen.fill(0)
@@ -375,10 +391,23 @@ while running:
             level=score/10000
         
         
-        
-        screen.blit(enemy_down.down_imgs[enemy_down.down_index / 2], enemy_down.rect)
+        screen.blit(enemy_down.down_imgs[enemy_down.down_index / 7], enemy_down.rect)
         #加入渐变效果，连续七次不一样的图片组合出消灭的特效
         enemy_down.down_index += 1
+
+    for bosses_down in boss_down:
+        if bosses_down.down_index == 0:
+            pass
+    #循环七次才执行消灭，画出消灭图
+        if bosses_down.down_index > 20:
+            boss_down.remove(bosses_down)
+            score += 5000
+            continue        
+        
+        screen.blit(bosses_down.down_imgs[bosses_down.down_index / 4], bosses_down.rect)
+        #加入渐变效果，连续七次不一样的图片组合出消灭的特效
+        bosses_down.down_index += 1
+ 
 
 
     player.bullets.draw(screen)
