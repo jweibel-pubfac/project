@@ -27,3 +27,6 @@ calculate<br>
 > Tkinter模块所写的计算器<br>
 > 界面简单，支持基本计算<br>
 
+脚本·笔记<br>
+> kali linux学习笔记<br>
+> 钓鱼wifi、arp欺骗、中间人攻击等常用脚本<br>
