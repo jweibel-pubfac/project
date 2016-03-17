@@ -5,7 +5,6 @@ from pygame.locals import *
 import random
 from random import randrange, choice
 
-
 SCREEN_WIDTH = 480
 SCREEN_HEIGHT = 800
 vita=6
@@ -553,6 +552,9 @@ text_rect.centerx = screen.get_rect().centerx
 text_rect.centery = screen.get_rect().centery + 24
 screen.blit(game_over, (0, 0))
 screen.blit(text, text_rect)
+
+
+
 
 while 1:
     for event in pygame.event.get():

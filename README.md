@@ -22,3 +22,8 @@ ShootGame<br>
 > pygame模块所写<br>
 > 加入生命数、boss、敌机、游戏等级<br>
 > 最新加入子弹强化、医疗包、炸弹包<br>
+
+calculate<br>
+> Tkinter模块所写的计算器<br>
+> 界面简单，支持基本计算<br>
+
