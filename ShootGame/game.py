@@ -12,21 +12,6 @@ vita=6
 #生命数
 
 #定义玩家、敌机类     -----------------------------------------------------------------------------
-class Bullet(pygame.sprite.Sprite):
-    def __init__(self, bullet_img, init_pos):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = bullet_img
-        self.rect = self.image.get_rect()
-        #得到一个矩阵
-        self.rect.midbottom = init_pos
-        self.speed = 10
-
-    def move(self):
-
-        self.rect.top -= self.speed
-       
-
-
 class Player(pygame.sprite.Sprite):
     def __init__(self, plane_img, player_rect, init_pos):
         pygame.sprite.Sprite.__init__(self)
@@ -38,16 +23,29 @@ class Player(pygame.sprite.Sprite):
         self.rect.topleft = init_pos              
         self.speed = 8                             
         self.bullets = pygame.sprite.Group()            
-        self.img_index = 0    
+        self.img_index = 0
+        self.bang=False
+        self.bangtime=1
         #决定飞机型号                         
         self.is_hit = False                             
 
     def shoot(self, bullet_img):
-        for i in range(level+1):
-            bullet = Bullet(bullet_img,[self.rect.midtop[0]+20*i,self.rect.midtop[1]])            
-            self.bullets.add(bullet)
-            bullet = Bullet(bullet_img,[self.rect.midtop[0]-20*i,self.rect.midtop[1]])
-            self.bullets.add(bullet)
+        if self.bang:
+            if (self.bangtime % 1 == 0):
+                for i in range(SCREEN_WIDTH/15):
+                    bullet = Bullet(bullet_img,[15*i,self.rect.midtop[1]])
+                    self.bullets.add(bullet)
+            if self.bangtime >2:
+                self.bang=False
+                self.bangtime=1
+            self.bangtime+=1
+        else:
+            for i in range(shoot_power+1):
+                bullet = Bullet(bullet_img,[self.rect.midtop[0]+20*i,self.rect.midtop[1]])            
+                self.bullets.add(bullet)
+                bullet = Bullet(bullet_img,[self.rect.midtop[0]-20*i,self.rect.midtop[1]])
+                self.bullets.add(bullet)
+
 
     def moveUp(self):
         if self.rect.top <= 0:
@@ -102,7 +100,7 @@ class boss(pygame.sprite.Sprite):
         self.down_imgs = enemy_down_imgs
         self.speed = randrange(1)
         self.down_index = 0
-        self.life=500
+        self.life=200
         self.time=0
         if self.rect.left<SCREEN_WIDTH/2:
             self.goleft= False
@@ -130,7 +128,18 @@ class boss(pygame.sprite.Sprite):
         if self.time>10:
             self.time=0
 
+class Bullet(pygame.sprite.Sprite):
+    def __init__(self, bullet_img, init_pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = bullet_img
+        self.rect = self.image.get_rect()
+        #得到一个矩阵
+        self.rect.midbottom = init_pos
+        self.speed = 10
 
+    def move(self):
+
+        self.rect.top -= self.speed
 class EnBullet(pygame.sprite.Sprite):
     def __init__(self, bullet_img, init_pos):
         pygame.sprite.Sprite.__init__(self)
@@ -154,13 +163,53 @@ class BossBullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         #得到一个矩阵
         self.rect.midbottom = init_pos
-        self.speed = 5
+        self.speed = 4
         self.choicespeed=randrange(-8,8)
 
     def move(self):
         
         self.rect.top += self.speed
         self.rect.left+=self.choicespeed
+
+class medical (pygame.sprite.Sprite):
+    def __init__(self, medical_img, init_pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = medical_img
+        self.rect = self.image.get_rect()
+        self.rect.topleft = init_pos
+        self.speed = 2
+        self.time=0
+    def move(self):
+        self.rect.top += self.speed
+        if self.time<100:
+            self.rect.left+=1
+        if self.time>100:
+            self.rect.left-=1
+        if self.time>200:
+            self.time=0
+        self.time+=1
+        
+class power (pygame.sprite.Sprite):
+    def __init__(self, power_rect, init_pos):
+        pygame.sprite.Sprite.__init__(self)
+        self.chooies=randrange(0,3)
+        self.image = plane_img.subsurface(power_rect[self.chooies])
+        self.rect = self.image.get_rect()
+        self.rect.topleft = init_pos
+        self.speed = 2
+        self.time=0
+    def move(self):
+        self.rect.top += self.speed
+        if self.time<100:
+            self.rect.left+=1
+        if self.time>100:
+            self.rect.left-=1
+        if self.time>200:
+            self.time=0
+        self.time+=1
+
+
+
 
 #定义玩家、敌机类     --------------------------------------------------------------------------------------------------------------------------------
 
@@ -215,6 +264,10 @@ enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(166, 488, 162, 246)))
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(673, 750, 165, 249)))
 enemy1_down_imgs.append(plane_img.subsurface(pygame.Rect(0, 760, 149, 199)))
 
+power_rect=[]
+power_rect.append(pygame.Rect(269,398,53,86))
+power_rect.append(pygame.Rect(101,119,59,104))
+power_rect.append(pygame.Rect(809,691,63,53))
 #不同的boss
 
 enemies1 = pygame.sprite.Group()
@@ -223,16 +276,19 @@ Enemybullets=pygame.sprite.Group()
 enemies_down = pygame.sprite.Group()
 boss_down = pygame.sprite.Group()
 enemies2=pygame.sprite.Group()
+powers=pygame.sprite.Group()
+
 #消灭的敌机
 
 shoot_frequency = 0
 enemy_frequency = 0
+shoot_power=0
 enshoot_frequency = 0
 boss_frequency=1
 boss_shoot=0
-
+power_frequency=1
 player_down_index = 16
-
+bang=0
 
 score = 0
 level=0
@@ -249,43 +305,50 @@ while running:
     
 #控制生成敌机、boss、子弹的频率  -------------------------------------  -----------------------------------------------------
     if not player.is_hit:
-        if shoot_frequency % (15-2*level) == 0:
+        if shoot_frequency % (15-1*level) == 0:
             player.shoot(bullet_img)
         shoot_frequency += 1
-        if shoot_frequency >= (15-2*level):
+        if shoot_frequency >= (15-1*level):
             shoot_frequency = 0
 
 
-    if enemy_frequency % (50-10*level)== 0:
+    if enemy_frequency % (50-2*level)== 0:
         enemy1_pos = [random.randint(0, SCREEN_WIDTH - enemy1_rect.width), 0]
         enemy1 = Enemy(enemy1_img, enemy1_down_imgs, enemy1_pos)
         enemies1.add(enemy1)
-        
-
     enemy_frequency += 1
-    if enemy_frequency >= (50-10*level):
+    if enemy_frequency >= (50-2*level):
         enemy_frequency = 0
 
-    if boss_frequency % (1000-10*level)== 0:
+
+    if boss_frequency % (1500-10*level)== 0:
         enemy2_pos = [random.randint(0, SCREEN_WIDTH - enemy2_rect.width), 0]
         enemy2 = boss(enemy2_img, enemy1_down_imgs, enemy2_pos)
         enemies2.add(enemy2)
     boss_frequency+=1
-    if boss_frequency >= (1000-10*level):
+    if boss_frequency >= (1500-10*level):
         boss_frequency=0
 
     
-    if enshoot_frequency % (250-10*level)== 0:
+    if enshoot_frequency % (150-10*level)== 0:
         for i in enemies1:
             i.shoot(bullet_img)
     enshoot_frequency+=1
-
-
-    if enshoot_frequency >= (250-10*level):
+    if enshoot_frequency >= (150-10*level):
         enshoot_frequency=0
 
+#强化  ------------------------
+    if power_frequency % (250-10*level)== 0:
+        power_pos = [random.randint(0, SCREEN_WIDTH - power_rect[2].width-70), 0]
+        powerss = power(power_rect, power_pos)
+        powers.add(powerss)
+    power_frequency+=1
+    if power_frequency >= (250-10*level):
+        power_frequency=0
+#强化  ------------------------
 
-    if boss_shoot % (100-10*level)== 0:
+
+    if boss_shoot % (150-10*level)== 0:
         try:
             for i in enemies2:
                 i.shoot(bullet_img)
@@ -293,7 +356,7 @@ while running:
             pass
 
     boss_shoot+=1
-    if boss_shoot >= (100-10*level):
+    if boss_shoot >= (150-10*level):
         boss_shoot=0
 #控制生成敌机、boss、子弹的频率  ------------------------------------------------------------------------------------------------------
 
@@ -352,7 +415,24 @@ while running:
  
                 if bosses.life<=0:
                     boss_down.add(bosses)
-                    enemies2.remove(bosses)    
+                    enemies2.remove(bosses)
+
+#子弹强化 ------------------------------
+    for powersss in powers:
+        powersss.move()
+        if pygame.sprite.collide_circle(powersss, player):
+            if powersss.chooies == 0:
+                vita+=1
+            if powersss.chooies == 1:
+                bang+=1
+            if powersss.chooies == 2:
+                if shoot_power<=6:
+                    shoot_power+=1
+            powers.remove(powersss)
+
+#子弹强化 ------------------------------
+
+    
 #触发事件，如果相撞   ----------------------------------------------------------------------------
     screen.fill(0)
     screen.blit(background, (0, 0))
@@ -362,20 +442,18 @@ while running:
 
 #如果玩家死亡  ------------------------------------------------
     if not player.is_hit:
-        screen.blit(player.image[level], player.rect)
+        screen.blit(player.image[level/3], player.rect)
 
     else:
 
         player.img_index = player_down_index / 8
-        screen.blit(player.image[level], player.rect)
+        screen.blit(player.image[level/3], player.rect)
         #失败时的图
         #失败后需循环47次
         player_down_index += 1
         player.is_hit = False 
         vita-=1
-        if vita == 0:        
-        #player_down_index=16 有4条命
-
+        if vita == 0:       
             running = False
         
 #如果玩家死亡  ------------------------------------------------
@@ -387,8 +465,8 @@ while running:
             enemies_down.remove(enemy_down)
             score += 1000
             continue
-        if score <= 42000:
-            level=score/10000
+        if score <= 499999:
+            level=score/50000
         
         
         screen.blit(enemy_down.down_imgs[enemy_down.down_index / 7], enemy_down.rect)
@@ -414,26 +492,33 @@ while running:
     Enemybullets.draw(screen)
     enemies2.draw(screen)
     enemies1.draw(screen)
+    powers.draw(screen)
     #画出子弹和敌机
 
 #屏幕显示生命数   -----------------------------------------------------------------
-    score_font = pygame.font.Font(None, 36)
-    score_text = score_font.render('score:'+str(score), True, (128, 128, 128))
+    font = pygame.font.Font(None, 36)
+    score_text = font.render('score:'+str(score), True, (128, 128, 128))
+
     text_rect = score_text.get_rect()
     text_rect.topleft = [10, 10]
     screen.blit(score_text, text_rect)
  
-    level_font = pygame.font.Font(None, 36)
-    level_text = score_font.render('level:'+str(level), True, (128, 128, 128))
+    level_text = font.render('level:'+str(level), True, (128, 128, 128))
     text_rect1 = score_text.get_rect()
     text_rect1.topleft = [400, 10]
     screen.blit(level_text, text_rect1)
 
-    vita_font = pygame.font.Font(None, 36)
-    vita_text = score_font.render('vita:'+str(vita), True, (128, 128, 128))
+    vita_text = font.render('vita:'+str(vita), True, (128, 128, 128))
     text_rect2 = score_text.get_rect()
     text_rect2.topleft = [200, 10]
     screen.blit(vita_text, text_rect2)
+
+    bang_text = font.render('bang:'+str(bang), True, (128, 128, 128))
+    bang_rect2 = score_text.get_rect()
+    bang_rect2.topleft = [290, 10]
+    screen.blit(bang_text, bang_rect2)
+
+    
 #屏幕显示生命数   -----------------------------------------------------------------
 
     pygame.display.update()
@@ -453,6 +538,11 @@ while running:
         player.moveLeft()
     if key_pressed[K_d] or key_pressed[K_RIGHT]:
         player.moveRight()
+    if key_pressed[K_SPACE]:
+        if player.bang==False:
+            if bang>=1:
+                player.bang=True
+                bang-=1
 #键盘输入       ----------------------------------------------------------------
 
 
