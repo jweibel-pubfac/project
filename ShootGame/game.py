@@ -100,7 +100,7 @@ class boss(pygame.sprite.Sprite):
         self.down_imgs = enemy_down_imgs
         self.speed = randrange(1)
         self.down_index = 0
-        self.life=200
+        self.life=300
         self.time=0
         if self.rect.left<SCREEN_WIDTH/2:
             self.goleft= False
@@ -147,7 +147,7 @@ class EnBullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         #得到一个矩阵
         self.rect.midbottom = init_pos
-        self.speed = 4
+        self.speed = 5
         self.choicespeed=randrange(-4,4)
 
     def move(self):
@@ -163,7 +163,7 @@ class BossBullet(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         #得到一个矩阵
         self.rect.midbottom = init_pos
-        self.speed = 4
+        self.speed = 5
         self.choicespeed=randrange(-8,8)
 
     def move(self):
@@ -330,11 +330,11 @@ while running:
         boss_frequency=0
 
     
-    if enshoot_frequency % (150-10*level)== 0:
+    if enshoot_frequency % (100-10*level)== 0:
         for i in enemies1:
             i.shoot(bullet_img)
     enshoot_frequency+=1
-    if enshoot_frequency >= (150-10*level):
+    if enshoot_frequency >= (100-10*level):
         enshoot_frequency=0
 
 #强化  ------------------------
