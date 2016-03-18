@@ -6,9 +6,11 @@ import copy
 class Frame(wx.Frame):
 
     def __init__(self,title):
+        #继承父类-----------------
         super(Frame,self).__init__(None,-1,title,
                 style=wx.DEFAULT_FRAME_STYLE^wx.MAXIMIZE_BOX^wx.RESIZE_BORDER)
-
+        #继承父类-----------------
+        #设置画界面所需颜色------------------------------------
         self.colors = {0:(204,192,179),2:(238, 228, 218),4:(237, 224, 200),
                 8:(242, 177, 121),16:(245, 149, 99),32:(246, 124, 95),
                 64:(246, 94, 59),128:(237, 207, 114),256:(237, 207, 114),
@@ -34,7 +36,7 @@ class Frame(wx.Frame):
                 2251799813685248:(237, 207, 114),4503599627370496:(237, 207, 114),
                 9007199254740992:(237, 207, 114),18014398509481984:(237, 207, 114),
                 36028797018963968:(237, 207, 114),72057594037927936:(237, 207, 114)}
-                
+        #设置画界面所需颜色------------------------------------                
         self.setIcon()
         self.initGame()
         #初始化游戏
@@ -44,23 +46,26 @@ class Frame(wx.Frame):
         panel.SetFocus()
         #键盘输入  ---------------
         self.initBuffer()
+        #发生事件绑定函数----------------------------------------------------
         self.Bind(wx.EVT_SIZE,self.onSize) 
         #窗口大小变化，执行onsize
         self.Bind(wx.EVT_PAINT, self.onPaint)
         #当关闭事件发生，则执行onclose
         self.Bind(wx.EVT_CLOSE,self.onClose)
+        #发生事件绑定函数----------------------------------------------------
         self.SetClientSize((505,720))
         self.Center()
         self.Show()
+
     def initBuffer(self):
         w,h = self.GetClientSize()
         self.buffer = wx.EmptyBitmap(w,h)
         #buffer对象，画出界面
-
+    #窗口大小变动-----------------------
     def onSize(self,event):
         self.initBuffer()
         self.drawAll()    
-
+    #窗口大小变动-----------------------
     def onPaint(self,event):
         dc = wx.BufferedPaintDC(self,self.buffer)
     # 关闭窗口 ----------------
