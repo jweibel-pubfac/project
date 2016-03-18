@@ -9,8 +9,11 @@ python-web.service:<br>
 
 2048:<br>
 > 个人参照教程，所写2048游戏源码<br>
-> 使用curses构造图形界面，依靠矩阵变换完成游戏<br>
+> 2048使用curses构造图形界面，依靠矩阵变换完成游戏<br>
 > 状态机判断游戏状态<br>
+> GUI2048使用wxpython编写<br>
+> 加入详细注释<br>
+> 思路清晰，界面美观<br>
 
 change.html<br>
 > 实现文本转为html文件<br>
@@ -30,3 +33,8 @@ calculate<br>
 脚本·笔记<br>
 > kali linux学习笔记<br>
 > 钓鱼wifi、arp欺骗、中间人攻击等常用脚本<br>
+
+chat_service<br>
+> 转载自博客
+> python sockets编程
+> 实现简单聊天功能
