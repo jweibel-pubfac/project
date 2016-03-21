@@ -38,4 +38,4 @@ calculate<br>
 > 常用模块源码<br>
 > 尽可能加入详细注释<br>
 > TinyHTTPProxy：轻量级http代理服务器<br>
-> chat_service:socket编写简单聊天室<br>
+> chat_service：socket编写简单聊天室<br>
