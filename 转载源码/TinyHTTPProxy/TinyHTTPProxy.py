@@ -30,23 +30,27 @@ from time import sleep
 import ftplib
   
 DEFAULT_LOG_FILENAME = "proxy.log"
-
+#定义服务器处理类-------------------------------------------------------------------------------------------------------------------------------
 class ProxyHandler (BaseHTTPServer.BaseHTTPRequestHandler):
     __base = BaseHTTPServer.BaseHTTPRequestHandler
     __base_handle = __base.handle
   
     server_version = "TinyHTTPProxy/" + __version__
     rbufsize = 0                        # self.rfile Be unbuffered
-  
+#处理客户端发来连接请求，如果通过，启用处理函数-----------------------------------------------------------------
     def handle(self):
         (ip, port) =  self.client_address
         self.server.logger.log (logging.INFO, "Request from '%s'", ip)
+        #如果不再允许客户端内
         if hasattr(self, 'allowed_clients') and ip not in self.allowed_clients:
+            #记录拒绝的请求内容
             self.raw_requestline = self.rfile.readline()
             if self.parse_request(): self.send_error(403)
         else:
             self.__base_handle()
-  
+#处理客户端发来连接请求-----------------------------------------------------------------
+
+#处理socket连接，成功则返回True-----------------------------------------------------------------------  
     def _connect_to(self, netloc, soc):
         i = netloc.find(':')
         if i >= 0:
@@ -61,6 +65,7 @@ class ProxyHandler (BaseHTTPServer.BaseHTTPRequestHandler):
             self.send_error(404, msg)
             return 0
         return 1
+#处理socket连接---------------------------------------------------------------------------------------
 #处理https连接--------------------------------------------------------- 
     def do_CONNECT(self):
         soc = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -163,6 +168,9 @@ class ProxyHandler (BaseHTTPServer.BaseHTTPRequestHandler):
     def log_error (self, format, *args):
         self.server.logger.log (logging.ERROR, "%s %s", self.address_string (),
                                 format % args)
+
+#定义服务器处理类-------------------------------------------------------------------------------------------------------------------------------
+
 #定义多线程服务器，同时处理多个get请求-------------------------------------------------------
 #多继承
 class ThreadingHTTPServer (SocketServer.ThreadingMixIn,
