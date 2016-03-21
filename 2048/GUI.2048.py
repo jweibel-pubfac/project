@@ -1,10 +1,11 @@
+#!/usr/bin/python
+#-*- coding:utf-8 -*-
 import wx
 import os
 import random
 import copy
 
 class Frame(wx.Frame):
-
     def __init__(self,title):
         #继承父类-----------------
         super(Frame,self).__init__(None,-1,title,

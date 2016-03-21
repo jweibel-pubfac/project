@@ -34,7 +34,8 @@ calculate<br>
 > kali linux学习笔记<br>
 > 钓鱼wifi、arp欺骗、中间人攻击等常用脚本<br>
 
-chat_service<br>
-> 转载自博客<br>
-> python sockets编程<br>
-> 实现简单聊天功能<br>
+转载源码<br>
+> 常用模块源码<br>
+> 尽可能加入详细注释<br>
+> TinyHTTPProxy：轻量级http代理服务器<br>
+> chat_service:socket编写简单聊天室<br>
