@@ -10,15 +10,17 @@
 #use todo;
 #create table users(id int(2) not null primary key auto_increment,title txt,finished int(2) default 0,post_data text)default charset=utf8;
 #数据库使用说明---------------------------------------------------------------------------------------------
-
+import time
 import os.path
 import torndb
 import tornado.httpserver
 import tornado.web
 import tornado.ioloop
 import tornado.options
-
+import argparse
+import MySQLdb
 from tornado.options import define, options
+
 #设置数据库连接参数------------------------------------------------------
 define("port", default=8888, help="run port", type=int)
 define("mysql_host", default="127.0.0.1:3306", help="db host")
@@ -125,6 +127,22 @@ class FinishHandler(tornado.web.RequestHandler):
 		self.redirect("/")
 #设置finished值，表示完成与否---------------------------------------------------------
 
+#使用参数--setup，自动完成数据库设置----------------------------------------------------------------------
+def dbSetup():
+	conn = MySQLdb.connect(host="127.0.0.1",user="root",passwd="")
+	try:
+#		conn = MySQLdb.connect(host="127.0.0.1",user="root",passwd="",db="test")
+		cur = conn.cursor()
+		cur.execute("create database todo")
+		time.sleep(2)
+		cur.execute("use todo")
+		cur.execute("create table todo(id int(2) not null primary key auto_increment,finished int default 0,title text,post_data text)default charset=utf8;")
+		print 'Database setup completed. Now run the app without --setup.'
+	except:
+		print 'App database already exists. Run the app without --setup.'
+	finally:
+		conn.close()
+#使用参数--setup，自动完成数据库设置----------------------------------------------------------------------
 
 def main():
 	tornado.options.parse_command_line()
@@ -133,6 +151,12 @@ def main():
 	tornado.ioloop.IOLoop.instance().start()
 
 if __name__ == "__main__":
-	main()
 
+	parser = argparse.ArgumentParser(description='Run the Flask todo app')
+	parser.add_argument('--setup', dest='run_setup', action='store_true')
 
+	args = parser.parse_args()
+	if args.run_setup:
+		dbSetup()
+	else:
+	    main()
