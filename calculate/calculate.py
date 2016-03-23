@@ -39,7 +39,9 @@ mainUI.geometry('200x210+300+300')
 display = StringVar()
 display.set('0')
 
-# StringVar是Tk库内部定义的字符串变量类型，在这里用于管理Button上面的字符。    b=Button(father,textvariable=<something>,command=<somecommand>)这里面的textvariable的值就是Button上面显示的字符内容，是个变 量。因为Python自己的变量类型不足以实现GUI要求的各种功能，所以使用了StringVar来定义。
+# StringVar是Tk库内部定义的字符串变量类型，在这里用于管理Button上面的字符。    
+#b=Button(father,textvariable=<something>,command=<somecommand>)这里面的textvariable的值就是Button上面显示的字符内容，是个变量。
+#因为Python自己的变量类型不足以实现GUI要求的各种功能，所以使用了StringVar来定义。
 
 # 添加计算器显示区域，使用Label，并设置背景色及大小
 textLabel = Label(mainUI)
