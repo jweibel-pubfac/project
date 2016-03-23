@@ -1,14 +1,14 @@
 # pyhacker
 python-web.service:<br>
-> ONE:tornado框架所写的个人网站<br>
+> ONE：tornado框架所写的个人网站<br>
 > 支持上传文件至服务器，删除与下载<br>
 > 在线爬虫，输入标签与网址，或上传html文件<br>
 > 远程控制服务器执行shell，可设置访问密码<br>
 > 在线执行python程序，兼容python2.7、python3.5<br>
-> TWO:事务记录网站<br>
+> TWO：事务记录网站<br>
 > 使用mysql数据库<br>
 > 附数据库使用说明<br>
-> THREE:P2P文件分享<br>
+> THREE：p2p文件分享<br>
 > XML-RPC远程过程调用所写<br>
 
 2048:<br>
