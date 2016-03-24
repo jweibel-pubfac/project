@@ -6,6 +6,7 @@ from SimpleXMLRPCServer import SimpleXMLRPCServer
 from urlparse import urlparse
 import sys
 import xmlrpclib
+import os
 
 SimpleXMLRPCServer.allow_reuse_address = 1
 
@@ -51,7 +52,6 @@ def getPort(url):
 #获得监听端口--------------------------------
 #服务类--------------------------------------------------
 class Node:
-
     def __init__(self, url, dirname, secret):
         self.url = url
         self.dirname = dirname
@@ -94,8 +94,12 @@ class Node:
         if not inside(dir,name):raise AccessDenied
         return xmlrpclib.Binary(open(name,'rb').read())
     #各服务器本地查询文件是否存在-------------------------
-
+    def list(self,history = []):
+        return ['【'+ self.url.split('//')[1]+'】'+'文件列表：']+os.listdir(self.dirname)
+        #[self.url]
     #广播到已知节点，查询文件------------------------------
+    def knownlist(self):
+        return list(self.known.copy())
     def _broadcast(self, query, history):
     
         for other in self.known.copy():

@@ -3,14 +3,16 @@ from xmlrpclib import ServerProxy,Fault
 from server import Node,UNHANDLED 
 from threading import Thread
 from time import sleep
-from os import listdir
+import os
 from random import choice
 from string import lowercase
 import sys
 import wx
 import argparse
+from os.path import join, abspath,isfile
+from urlparse import urlparse
 
-HEAD_START = 0.1 #Seconds
+HEAD_START =1 #Seconds
 SECRET_LENGTH = 100
 
 #生成随机密码，防止别人控制本地node服务器---------------------------------
@@ -24,15 +26,15 @@ def randomString(length):
 #生成随机密码，防止别人控制本地node服务器---------------------------------
 
 #查询本地文件夹已有文件---------------------
-class ListableNode(Node):
-    def list(self):
-        return listdir(self.dirname)
+#class ListableNode(Node):
+#   def list(self):
+#      return os.listdir(self.dirname)
 #查询本地文件夹已有文件---------------------
 
 class Client(wx.App):
     def __init__(self, url, dirname, urlfile):
         self.secret = randomString(SECRET_LENGTH)
-        n = ListableNode(url,dirname, self.secret)
+        n = Node(url,dirname, self.secret)
         t = Thread(target=n._start)
         t.setDaemon(1)
         t.start()
@@ -46,7 +48,12 @@ class Client(wx.App):
         super(Client, self).__init__()
     #更新本地文件列表--------------------------
     def updateList(self):
-        self.files.Set(self.server.list())
+        fileslist=self.server.list()
+        for other in self.server.knownlist():
+            #本地已知节点是否在查询记录中，存在则跳过
+            s = ServerProxy(other)
+            fileslist.extend(files.append(s.list))
+        self.files.Set(fileslist)
     #更新本地文件列表--------------------------
     def OnInit(self):
         #设置框架
@@ -92,10 +99,10 @@ class Client(wx.App):
 
         except Fault,f:
             if f.faultCode != UNHANDLED: raise
-            print "Counldn't find the file",query
+            print("Counldn't find the file",query)
 def Setup():
     if not os.path.exists('url'):
-        f=open('f.txt','w')
+        f=open('url.txt','w')
         #r只读，w可写，a追加
         f.close()
     if not os.path.exists('files'):
@@ -103,14 +110,8 @@ def Setup():
 
 def main():
     urlfile, directory,url = sys.argv[1:]
-    client = Client('127.0.0.1:9876', 'files', 'url.txt')
+    client = Client(url, directory, urlfile)
     client.MainLoop()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Run the Flask todo app')
-    parser.add_argument('--setup', dest='run_setup', action='store_true')
-    args = parser.parse_args()
-    if args.run_setup:
-        Setup()
-    else:
-        main()
+    main()
