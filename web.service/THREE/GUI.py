@@ -8,6 +8,7 @@ from random import choice
 from string import lowercase
 import sys
 import wx
+import argparse
 
 HEAD_START = 0.1 #Seconds
 SECRET_LENGTH = 100
@@ -92,11 +93,24 @@ class Client(wx.App):
         except Fault,f:
             if f.faultCode != UNHANDLED: raise
             print "Counldn't find the file",query
+def Setup():
+    if not os.path.exists('url'):
+        f=open('f.txt','w')
+        #r只读，w可写，a追加
+        f.close()
+    if not os.path.exists('files'):
+        os.mkdir('files')
 
 def main():
     urlfile, directory,url = sys.argv[1:]
-    client = Client(url, directory, urlfile)
+    client = Client('127.0.0.1:9876', 'files', 'url.txt')
     client.MainLoop()
 
 if __name__ == '__main__':
-    main()
+    parser = argparse.ArgumentParser(description='Run the Flask todo app')
+    parser.add_argument('--setup', dest='run_setup', action='store_true')
+    args = parser.parse_args()
+    if args.run_setup:
+        Setup()
+    else:
+        main()
