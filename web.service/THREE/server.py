@@ -57,6 +57,7 @@ class Node:
         self.dirname = dirname
         self.secret = secret
         self.known = set()
+
     def query(self, query, history = []):
         try:
             return self._handle(query)
@@ -69,6 +70,7 @@ class Node:
     def hello(self,other):
         self.known.add(other)
         return 0
+    #本地调用fetch，self.query查询文件无，广播出去，调用远程query，如果找到文件，返回文件到本地
     def fetch(self, query, secret):
 
         if secret != self.secret: raise
