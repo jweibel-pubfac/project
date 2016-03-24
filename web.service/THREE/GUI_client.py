@@ -1,4 +1,8 @@
 #coding=utf-8
+#P2P文件共享，可添加邻居到url.txt，格式：http://ip:port
+#六次递归，查询邻居以及邻居的邻居所共享的文件
+#输入文件名，点击fetch取回文件到本地
+
 from xmlrpclib import ServerProxy,Fault
 from server import Node,UNHANDLED 
 from threading import Thread
@@ -8,9 +12,6 @@ from random import choice
 from string import lowercase
 import sys
 import wx
-import argparse
-from os.path import join, abspath,isfile
-from urlparse import urlparse
 
 HEAD_START =1 #Seconds
 SECRET_LENGTH = 100
@@ -46,15 +47,15 @@ class Client(wx.App):
         #run gui
         #继承父类
         super(Client, self).__init__()
-    #更新本地文件列表--------------------------
+    #更新文件列表，可查看邻居文件列表--------------------------
     def updateList(self):
         fileslist=self.server.list()
-        for other in self.server.knownlist():
-            #本地已知节点是否在查询记录中，存在则跳过
-            s = ServerProxy(other)
-            fileslist.extend(files.append(s.list))
+       # for other in self.server.knownlist():
+      #      #本地已知节点是否在查询记录中，存在则跳过
+       #     s = ServerProxy(other)
+       #     fileslist.extend(files.append(s.list))
         self.files.Set(fileslist)
-    #更新本地文件列表--------------------------
+    #更新文件列表，可查看邻居文件列表--------------------------
     def OnInit(self):
         #设置框架
         win = wx.Frame(None, title="File Sharing Client",size=(400,399))
@@ -114,4 +115,5 @@ def main():
     client.MainLoop()
 
 if __name__ == '__main__':
+    Setup()
     main()

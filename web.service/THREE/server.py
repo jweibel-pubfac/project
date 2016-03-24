@@ -94,9 +94,23 @@ class Node:
         if not inside(dir,name):raise AccessDenied
         return xmlrpclib.Binary(open(name,'rb').read())
     #各服务器本地查询文件是否存在-------------------------
+    #只可查询邻居的文件--------------------------------------------------------------------
+    #def list(self,history = []):
+       # return ['【'+ self.url.split('//')[1]+'】'+'文件列表：']+os.listdir(self.dirname)
+    #只可查询邻居的文件--------------------------------------------------------------------
+    
+    #六次递归查询--------------------------------------------------------------------------
     def list(self,history = []):
-        return ['【'+ self.url.split('//')[1]+'】'+'文件列表：']+os.listdir(self.dirname)
-        #[self.url]
+        filelist=['【'+ self.url.split('//')[1]+'】'+'文件列表：']+os.listdir(self.dirname)
+        history = history + [self.url]
+        #传递查询记录，节点查询大于6，终止
+        if len(history) < MAX_HISTORY_LENGTH:
+            for other in self.known.copy():
+                s = ServerProxy(other)
+                filelist=filelist+s.list(history)
+        return filelist
+    #六次递归查询--------------------------------------------------------------------------
+        
     #广播到已知节点，查询文件------------------------------
     def knownlist(self):
         return list(self.known.copy())

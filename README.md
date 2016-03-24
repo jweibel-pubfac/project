@@ -10,6 +10,7 @@ python-web.service:<br>
 > 附数据库使用说明<br>
 > THREE：p2p文件分享<br>
 > XML-RPC远程过程调用所写<br>
+> 六次递归查询邻居的邻居共享文件<br>
 
 2048:<br>
 > 个人参照教程，所写2048游戏源码<br>
