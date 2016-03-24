@@ -2,6 +2,7 @@
 #P2P文件共享，可添加邻居到url.txt，格式：http://ip:port
 #六次递归，查询邻居以及邻居的邻居所共享的文件
 #输入文件名，点击fetch取回文件到本地
+#使用：python GUI_client.py url.txt files http://本地ip:port
 
 from xmlrpclib import ServerProxy,Fault
 from server import Node,UNHANDLED 
