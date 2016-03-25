@@ -59,8 +59,11 @@ class NNTPSource:
 
         def getItems(self):
                 start = localtime(time() - self.window*day)
+                #time()返回当前时间的时间戳（1970纪元后经过的浮点秒数）
+                #localtime根据秒数，返回一个tuple，包括年，月，日，时，分，秒
                 #处理时间，确定获取哪一天的文章，day为一天的秒数
                 date = strftime('%y%m%d',start)
+                #strftime用于时间转字符串，如不输入第二参数，默认为当前时间
                 hour = strftime('%H%M%S',start)
                 #获取新闻-------------------------------------------------------
                 server = NNTP(self.servername)
