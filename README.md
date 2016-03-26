@@ -45,3 +45,4 @@ calculate<br>
 > TinyHTTPProxy：轻量级http代理服务器<br>
 > chat_service：socket编写简单聊天室<br>
 > translate：即时翻译，有道API<br>
+> 小项目：常见简易项目，加入详细注解<br>
