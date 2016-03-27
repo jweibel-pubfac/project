@@ -1,3 +1,4 @@
+#游戏各参数设定
 banana_image = 'banana.png'
 weight_image = 'weight.png'
 splash_image = 'weight.png'

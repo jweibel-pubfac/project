@@ -12,27 +12,14 @@ python-web.service:<br>
 > XML-RPC远程过程调用所写<br>
 > 六次递归查询邻居的邻居共享文件<br>
 
-2048:<br>
-> 个人参照教程，所写2048游戏源码<br>
-> 2048使用curses构造图形界面，依靠矩阵变换完成游戏<br>
-> 状态机判断游戏状态<br>
-> GUI2048使用wxpython编写<br>
-> 加入详细注释<br>
-> 思路清晰，界面美观<br>
-
-change.html<br>
-> 实现文本转为html文件<br>
-> 自动判断应该使用标签<br>
-> 仿照教程所写，加入了个人注释<br>
-
-ShootGame<br>
-> 灰机大战<br>
+Game:<br>
+> 2048：个人参照教程，所写2048游戏源码<br>
+> curses构造图形界面，依靠矩阵变换完成游戏<br>
+> GUI2048：使用wxpython编写<br>
+> ShootGame：灰机大战<br>
 > pygame模块所写<br>
-> 加入生命数、boss、敌机、游戏等级<br>
-> 最新加入子弹强化、医疗包、炸弹包<br>
-
-calculate<br>
-> Tkinter模块所写的计算器<br>
+> 加入子弹强化、医疗包、炸弹包<br>
+> calculate：Tkinter模块所写的计算器<br>
 > 界面简单，支持基本计算<br>
 
 脚本·笔记<br>
@@ -44,5 +31,7 @@ calculate<br>
 > 尽可能加入详细注释<br>
 > TinyHTTPProxy：轻量级http代理服务器<br>
 > chat_service：socket编写简单聊天室<br>
+> notice：自定义公告栏<br>
 > translate：即时翻译，有道API<br>
+> change.html：实现文本转为html文件<br>
 > 小项目：常见简易项目，加入详细注解<br>
