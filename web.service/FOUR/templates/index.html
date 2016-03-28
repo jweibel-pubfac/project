@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>The hackerl</title>
+<meta content="个人博客模板,博客模板,响应式" name="keywords">
+<meta content="如影随形主题的个人博客模板，神秘、俏皮。" name="description">
+<link href="{{static_url("css/base.css")}}" rel="stylesheet">
+<link href="{{static_url("css/index.css")}}" rel="stylesheet">
+<link href="{{static_url("css/media.css")}}" rel="stylesheet">
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_popup.css?v=240f357d.css">
+<link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_32.css">
+<meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
+<!--[if lt IE 9]>
+<script src="{{static_url("js/modernizr.js")}}"></script>
+<![endif]-->
+</head>
+<body>
+<div class="ibody">
+  <header>
+    <h1>如影随形</h1>
+    <h2>影子是一个会撒谎的精灵，它在虚空中流浪和等待被发现之间;在存在与不存在之间....</h2>
+    <div class="logo"><a href="/"></a></div>
+    <nav id="topnav"><a href="/" id="topnav_current">首页</a><a href="/about">关于我</a><a href="/newlist">从前慢</a><a href="/program">程序园</a><a href="/music">弹指间</a></nav>
+  </header>
+  <article>
+    <div class="banner">
+      <ul class="texts">
+        <p>The best life is use of willing attitude, a happy-go-lucky life. </p>
+        <p>最好的生活是用心甘情愿的态度，过随遇而安的生活。</p>
+      </ul>
+    </div>
+    <div class="bloglist">
+      <h2>
+        <p><span>推荐</span>文章</p>
+      </h2>
+      {% for blog in blogs %}
+      <div class="blogs">
+        <h3><a href="/view?id={{ blog.id }}">{{ blog.title }}</a></h3>
+        <figure><img src="{{static_url("article/1.jpg")}}"></figure>
+        <ul>
+          <p>{{ blog.article }}</p>
+          <a class="readmore" target="_blank" href="/view?id={{ blog.id }}">阅读全文&gt;&gt;</a>
+        </ul>
+        <p class="autor"><span>作者：刘小盼</span><span>分类：python</a></span><span>浏览（<a href="/">459</a>）</span><span>评论（<a href="/">30</a>）</span></p>
+        <div class="dateview">{{ blog.post_date }}</div>
+      </div>
+      {% end %}
+    </div>
+  </article>
+  <aside>
+    <div class="avatar"><a href="/about"><span>关于刘小盼</span></a></div>
+    <div class="topspaceinfo">
+      <h1>相濡以沫，不如相忘于江湖</h1>
+      <p>惟江上之清风，山间之明月....</p>
+    </div>
+    <div class="about_c">
+      <p>网名：Hackerl | 江湖风轻</p>
+      <p>爱好：python、吉他、钢琴、小说 </p>
+      <p>籍贯：江西省&mdash;九江市</p>
+      <p>电话：13870675448</p>
+      <p>邮箱：490021209@qq.com</p>
+    </div>
+    <div class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1459145422299"><a title="分享到QQ空间" data-cmd="qzone" class="bds_qzone" href="#"></a><a title="分享到新浪微博" data-cmd="tsina" class="bds_tsina" href="#"></a><a title="分享到腾讯微博" data-cmd="tqq" class="bds_tqq" href="#"></a><a title="分享到人人网" data-cmd="renren" class="bds_renren" href="#"></a><a title="分享到微信" data-cmd="weixin" class="bds_weixin" href="#"></a><a data-cmd="more" class="bds_more" href="#"></a></div>
+    <div class="tj_news">
+      <h2>
+        <p class="tj_t1">最新文章</p>
+      </h2>
+      <ul>
+        {% for blog in blogs %}
+        <li><a href="/">犯错了怎么办？</a></li>
+      {% end %}
+      </ul>
+      <h2>
+        <p class="tj_t2">推荐文章</p>
+      </h2>
+      <ul>
+        {% for blog in blogs %}
+        <li><a href="/">犯错了怎么办？</a></li>
+      {% end %}
+      </ul>
+    </div>
+    <div class="links">
+      <h2>
+        <p>友情链接</p>
+      </h2>
+      <ul>
+        <li><a href="https://github.com/Hackerl">My github</a></li>
+        <li><a href="https://www.91ri.org/">91Ri.org</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <ul>
+        <p> Design by <a href="/">DanceSmile</a></p>
+        <p>蜀ICP备11002373号-1</p>
+        <p></p>
+      </ul>
+    </div>
+  </aside>
+  <script src="{{static_url("js/modernizr.js")}}"></script>
+  <div class="clear"></div>
+  <!-- 清除浮动 --> 
+</div>
+</body>
+</html>
