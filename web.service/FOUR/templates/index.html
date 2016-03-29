@@ -35,16 +35,18 @@
       <h2>
         <p><span>推荐</span>文章</p>
       </h2>
+      
       {% for article in articles %}
       <div class="blogs">
         <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
         <figure><img src="static/article/{{ article.title }}"></figure>
         <ul>
-          <div class="content_html">{{ article.content_html }}</div><br><br><br>
+          <div class="content_html">{{ article.content_md[0:120] }}.....
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
-        <p class="autor"><span>作者：刘小盼</span><span>分类：python</a></span><span>浏览（<a href="/">459</a>）</span><span>评论（<a href="/">30</a>）</span><span>
+        <p class="autor"><span>作者：刘小盼</span><span>分类：{{ article.sort }}</a></span><span>浏览（<a href="/">459</a>）</span><span>评论（<a href="/">30</a>）</span><span>
         {% if isAdmin %}
+        <small><a href="/createArticle">[新建]</a></small>
         <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
         <small><a href="/article/delete/{{ article.id }}">[删除]</a></small>
         {% end %}
@@ -74,7 +76,7 @@
       </h2>
       <ul>
         {% for article in articles %}
-        <li><a href="article/{{article.id}}">{{article.title}}？</a></li>
+        <li><a href="article/{{article.id}}">{{article.title}}</a></li>
         {% end %}
       </ul>
       <h2>

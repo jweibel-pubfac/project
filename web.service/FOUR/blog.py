@@ -83,19 +83,31 @@ class MusicHandler(BaseHandler):
 class ProseHandler(BaseHandler):
     def get(self):
         p = Paginator(Article.all(self.db,'prose'), 5)
-        page = p.page(1)
+        total=p.count
+        page_count=p.page_range
+        try:
+            nowpage=int(self.get_argument('page'))
+        except:
+            nowpage=int(1)
+        page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('prose.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage)
 class ProgramHandler(BaseHandler):
     def get(self):
         p = Paginator(Article.all(self.db,'program'), 5)
-        page = p.page(1)
+        total=p.count
+        page_count=p.page_range
+        try:
+            nowpage=int(self.get_argument('page'))
+        except:
+            nowpage=int(1)
+        page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('program.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage)
 class HomeHandler(BaseHandler):
     def get(self):
         p = Paginator(Article.all(self.db), 5)
@@ -109,11 +121,12 @@ class HomeHandler(BaseHandler):
 class ArticleListHandler(BaseHandler):
     def get(self, pageId):
         p = Paginator(Article.all(self.db), 5)
+        total= p.count
         page = p.page(int(pageId))
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('index.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page)
+                isAdmin=isAdmin, page=page,total=total)
 
 
 class ArticleHandler(BaseHandler):
@@ -170,7 +183,7 @@ class DeleteHandler(BaseHandler):
 class EditArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
-        article = Article.get(self.db, id)
+        article,up,dn,relevant = Article.get(self.db, id)
         if article is None:
             error = '404: Page Not Found'
             self.render('error.html', error=error, home_title=options.home_title)

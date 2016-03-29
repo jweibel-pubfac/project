@@ -28,31 +28,62 @@
         <p><span>python</span>--黑帽子</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-     {% for article in articles %}
-        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
+        {% for article in articles %}
+        {% for label in article.labels %}
+        {% if 'python' ==label.detail %}
+        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+      {% end %}
+      {% end %}
+      {% end %}
       </ul>
       <h3>
         <p><span>javascrip</span>--大时代</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
+        {% for article in articles %}
+        {% for label in article.labels %}
+        {% if 'javascrip' ==label.detail %}
+        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+      {% end %}
+      {% end %}
+      {% end %}
       </ul>
       <h3>
         <p><span>security</span>--安全攻防</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
-
+        {% for article in articles %}
+        {% for label in article.labels %}
+        {% if 'security' ==label.detail %}
+        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+      {% end %}
+      {% end %}
+      {% end %}
       </ul>
       <h3>
         <p><span>github</span>--源码</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
+        {% for article in articles %}
+        {% for label in article.labels %}
+        {% if 'github' ==label.detail %}
+        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+      {% end %}
+      {% end %}
       {% end %}
       </ul>
     </div>
-    <div class="page"><a title="Total record"><b>113</b></a><b>1</b><a href="/">2</a><a href="/">3</a><a href="/">4</a><a href="/">5</a><a href="/">&gt;</a><a href="/">&gt;&gt;</a></div>
+    <div class="page"><a title="Total record"><b>{{total}}</b></a>
+    {% for i in page_count[nowpage-4:nowpage+4] %}
+       {% if i==nowpage %}
+         <b>{{i}}</b>
+       {% else %}
+       <a href="/prose?page={{i}}">{{i}}</a>
+    {% end %}
+{% end %}
+   {% if nowpage != page_count[-1] %}
+      <a href="/prose?page={{nowpage+1}}">&gt;</a><a href="/prose?page={{page_count[-1]}}">&gt;&gt;</a></div>
+   {% end %}
   </article>
   <aside>
     <div class="rnav">
