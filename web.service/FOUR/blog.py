@@ -25,6 +25,8 @@ class Application(tornado.web.Application):
             (r'/createArticle', CreateArticleHandler),
             (r'/preview', PreviewHandler),
             (r'/article/edit/(\d+)', EditArticleHandler),
+            (r'/article/delete/(\d+)', DeleteHandler),
+
             (r'/article/update/(\d+)', UpdateArticleHandler),
             (r'/login', LoginHandler),
             (r'/logout', LogoutHandler),
@@ -152,6 +154,12 @@ class PreviewHandler(BaseHandler):
                 user=options.user, photo=options.photo)
 
 
+class DeleteHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self,id):
+         Article.delete(self.db, id)
+         Article.new(self.db)
+         self.redirect('/')
 class EditArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
@@ -170,14 +178,12 @@ class UpdateArticleHandler(BaseHandler):
         title = self.get_argument('title')
         content_md = self.get_argument('content')
         sort = self.get_argument('sort')
-        print(sort)
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
 
-
-        Article.update(self.db, id, title, content_md, content_html,sort)
         try:
+            Article.update(self.db, id, title, content_md, content_html,sort)
             Label.deleteAll(self.db, id)
             for label in labels:
                 detail = label[1:-1].strip()
@@ -203,12 +209,13 @@ class CreateArticleHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
-        print(title,content_md,sort,labels,content_html)
+        
+        article_id = Article.create(self.db, title, content_md, content_html,sort)   
+        for label in labels:
+            detail = label[1:-1].strip()
+            Label.create(self.db, article_id, detail)
+        Article.new(self.db)
         try:
-            article_id = Article.create(self.db, title, content_md, content_html,sort)   
-            for label in labels:
-                detail = label[1:-1].strip()
-                Label.create(self.db, article_id, detail)
             self.redirect('/', permanent=True)
         except:
             error = "The post data invalid"

@@ -27,6 +27,7 @@
       <p class="box_c"><span class="d_time">发布时间：{{ article.time}}</span><span>编辑：刘小盼</span><span>浏览（390）</span><span>评论览（14）</span></p>
         {% if isAdmin %}
         <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
+        <small><a href="/article/delete/{{ article.id }}">[删除]</a></small>
         {% end %}
       <ul class="infos">
        <div class="content_html">{{ article.content_html }}</div>

@@ -38,6 +38,28 @@ class Article(object):
     @classmethod
     def totalNumber(cls, db):
         return db.execute_rowcount('SELECT * FROM article')
+    @classmethod
+    def delete(cls, db,id):
+        db.execute('DELETE FROM article WHERE id=%s',id)
+        db.execute('DELETE FROM label WHERE article_id=%s'%id)
+    @classmethod
+    def new(cls, db):
+        sum = 0
+        articles=db.query("SELECT * FROM article")
+        for article in articles:
+            sum=sum+1
+            if(article.id != sum ):  
+                db.execute("UPDATE article SET id=%s WHERE id=%s",sum,article.id)   
+                db.execute("UPDATE label SET article_id=%s WHERE article_id=%s",sum,article.id) 
+        labels=db.query("SELECT * FROM label")
+        sum=0
+        for label in labels:
+            sum=sum+1
+            if(label.id != sum ):  
+                db.execute("UPDATE label SET id=%s WHERE id=%s",sum,label.id)   
+        
+
+       
 
 
 class Label(object):
@@ -45,7 +67,6 @@ class Label(object):
     def all(cls, db, article_id):
         return db.query('SELECT detail FROM label \
                 WHERE article_id = %s', article_id)
-
     @classmethod
     def create(cls, db, article_id, detail):
         db.execute('INSERT INTO label (article_id, detail) \
