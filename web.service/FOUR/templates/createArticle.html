@@ -6,9 +6,11 @@ Post an Article
 
 {% block content %}
 <div class="form-container">
-    <form id="article" action="/preview" method="post">
+    <form id="article" enctype="multipart/form-data" action="/preview" method="post">
         <legend>发表文章</legend>
         {% module xsrf_form_html() %}
+        <label for="article-image">封面</label>
+        <input type="file" id="article-image" name="image"/><br><br>
         <label for="article-sort">分类</label>
         <input type="text" id="article-sort" name="sort"/>
         <label for="article-title">标题</label>

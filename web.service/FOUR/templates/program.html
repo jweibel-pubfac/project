@@ -31,7 +31,6 @@
      {% for article in articles %}
         <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
       </ul>
-     {% end %}
       <h3>
         <p><span>javascrip</span>--大时代</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
@@ -50,6 +49,7 @@
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
         <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
+      {% end %}
       </ul>
     </div>
     <div class="page"><a title="Total record"><b>113</b></a><b>1</b><a href="/">2</a><a href="/">3</a><a href="/">4</a><a href="/">5</a><a href="/">&gt;</a><a href="/">&gt;&gt;</a></div>

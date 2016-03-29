@@ -2,6 +2,8 @@
 #-*- coding:utf-8 -*-
 import hashlib
 import time
+import os.path
+import os
 
 class Article(object):
     @classmethod
@@ -20,11 +22,23 @@ class Article(object):
     @classmethod
     def get(cls, db, id):
         article = db.get('SELECT * FROM article WHERE id = %s', id)
+        try:
+            relevant=db.query('SELECT * FROM article WHERE (sort = %s and id<> %s )',article.sort,article.id)
+        except:
+            relevant=None
+        try:
+            up=db.get('SELECT * FROM article WHERE id = %s',str(int(id)-1))
+        except:
+            up=None
+        try:
+            dn=db.get('SELECT * FROM article WHERE id = %s', str(int(id)+1))
+        except:
+            dn=None
         if article is None:
-            return article
+            return article,up,dn,relevant
         else:
             article['labels'] = Label.all(db, article.id)
-            return article
+            return article,up,dn,relevant
 
     @classmethod
     def create(cls, db, title, content_md, content_html,sort):
@@ -40,6 +54,10 @@ class Article(object):
         return db.execute_rowcount('SELECT * FROM article')
     @classmethod
     def delete(cls, db,id):
+        articles=db.query("SELECT * FROM article where id=%s",id)
+        filepath = os.path.join('static/article',articles[0].title)
+        if os.path.isfile(filepath):
+            os.remove(filepath)
         db.execute('DELETE FROM article WHERE id=%s',id)
         db.execute('DELETE FROM label WHERE article_id=%s'%id)
     @classmethod

@@ -40,21 +40,29 @@
     </p>
    {% end %}
       </div>
+    {% block near %}
       <div class="nextinfo">
-        <p>上一篇：<a href="/news/s/2013-09-04/606.html">程序员应该如何高效的工作学习</a></p>
-        <p>下一篇：<a href="/news/s/2013-10-21/616.html">柴米油盐的生活才是真实</a></p>
+        {% if up %}
+        <p>上一篇：<a href="{{up.id}}">{{up.title}}</a></p>
+        {% end %}
+        {% if dn %}
+        <p>下一篇：<a href="{{dn.id}}">{{dn.title}}</a></p>
+        {% end %}
       </div>
+     {%end%}
+     {% block relevant %}
       <div class="otherlink">
         <h2>相关文章</h2>
         <ul>
-          <li><a title="现在，我相信爱情！" href="/news/s/2013-07-25/524.html">现在，我相信爱情！</a></li>
-          <li><a title="我希望我的爱情是这样的" href="/newstalk/mood/2013-07-24/518.html">我希望我的爱情是这样的</a></li>
-          <li><a title="有种情谊，不是爱情，也算不得友情" href="/newstalk/mood/2013-07-02/335.html">有种情谊，不是爱情，也算不得友情</a></li>
-          <li><a title="世上最美好的爱情" href="/newstalk/mood/2013-07-01/329.html">世上最美好的爱情</a></li>
-          <li><a title="爱情没有永远，地老天荒也走不完" href="/news/read/2013-06-11/213.html">爱情没有永远，地老天荒也走不完</a></li>
-          <li><a title="爱情的背叛者" href="/news/s/2013-06-06/24.html">爱情的背叛者</a></li>
+          {% if relevants %}
+          {% for relevant in relevants %}
+          <li><a title="{{relevant.title}}" href="{{relevant.id}}">{{relevant.title}}</a></li>
+          {% end %}
+          {% end %}
         </ul>
       </div>
+     {% end %}
+
     </div>
   </article>
   <aside>

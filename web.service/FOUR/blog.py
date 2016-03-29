@@ -118,14 +118,14 @@ class ArticleListHandler(BaseHandler):
 
 class ArticleHandler(BaseHandler):
     def get(self, id):
-        article = Article.get(self.db, id)
+        article,up,dn,relevant = Article.get(self.db, id)
         if article is None:
             error = '404: Page Not Found'
             self.render('error.html', error=error, home_title=options.home_title)
         else:
             isAdmin = self.isAdmin()
             label_list = Label.group(self.db)
-            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin)
+            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant)
 
 
 class PreviewHandler(BaseHandler):
@@ -137,7 +137,14 @@ class PreviewHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
-
+        file_metas = self.request.files["image"]
+        for meta in file_metas:
+            filename = title
+            filepath = os.path.join('static/article', title)
+            if not os.path.isfile(filepath):
+                # 有些文件需要已二进制的形式存储，实际中可以更改
+                with open(filepath, 'wb') as up:
+                    up.write(meta['body'])
         article = {}
         article['sort']=sort
         article['title'] = title
