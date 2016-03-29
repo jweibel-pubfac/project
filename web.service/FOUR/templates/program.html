@@ -19,7 +19,7 @@
     <h1>如影随形</h1>
     <h2>影子是一个会撒谎的精灵，它在虚空中流浪和等待被发现之间;在存在与不存在之间....</h2>
     <div class="logo"><a href="/"></a></div>
-    <nav id="topnav"><a href="/">首页</a><a href="/about">关于我</a><a href="/newlist">从前慢</a><a href="/program" id="topnav_current">程序园</a><a href="/music">弹指间</a></nav>
+    <nav id="topnav"><a href="/">首页</a><a href="/about">关于我</a><a href="/prose">从前慢</a><a href="/program" id="topnav_current">程序园</a><a href="/music">弹指间</a></nav>
   </header>
   <article>
     <h2 class="about_h">您现在的位置是：<a href="/">首页</a>&gt;<a href="1/">程序园</a></h2>
@@ -28,41 +28,28 @@
         <p><span>python</span>--黑帽子</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-      {% for blog in article %}
-        {% if blog.sort=='python'%}
-        <li><a target="_blank" href="/view?id={{ blog.id }}"><img src="static/article/{{ blog.id }}.jpg"></a><span>{{ blog.title }}</span></li>
-      {% end %}
-      {% end %}
+     {% for article in articles %}
+        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
       </ul>
+     {% end %}
       <h3>
         <p><span>javascrip</span>--大时代</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-      {% for blog in article %}
-      {% if blog.sort=='js'%}
-        <li><a target="_blank" href="/view?id={{ blog.id }}"><img src="static/article/{{ blog.id }}.jpg"></a><span>{{ blog.title }}</span></li>
-      {% end %}
-      {% end %}
+        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
       </ul>
       <h3>
         <p><span>security</span>--安全攻防</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-      {% for blog in article %}
-      {% if blog.sort=='security'%}
-        <li><a target="_blank" href="/view?id={{ blog.id }}"><img src="static/article/{{ blog.id }}.jpg"></a><span>{{ blog.title }}</span></li>
-      {% end %}
-      {% end %}
+        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
+
       </ul>
       <h3>
         <p><span>github</span>--源码</p>
         <a class="more" href="/">更多&gt;&gt;</a> </h3>
       <ul>
-      {% for blog in article %}
-      {% if blog.sort=='github'%}
-        <li><a target="_blank" href="/view?id={{ blog.id }}"><img src="static/article/{{ blog.id }}.jpg"></a><span>{{ blog.title }}</span></li>
-      {% end %}
-      {% end %}
+        <li><a target="_blank" href="/article/{{article.id}}"><img src="static/article/{{ article.id }}.jpg"></a><span>{{ article.title }}</span></li>
       </ul>
     </div>
     <div class="page"><a title="Total record"><b>113</b></a><b>1</b><a href="/">2</a><a href="/">3</a><a href="/">4</a><a href="/">5</a><a href="/">&gt;</a><a href="/">&gt;&gt;</a></div>

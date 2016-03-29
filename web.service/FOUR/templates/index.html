@@ -21,7 +21,7 @@
     <h1>如影随形</h1>
     <h2>影子是一个会撒谎的精灵，它在虚空中流浪和等待被发现之间;在存在与不存在之间....</h2>
     <div class="logo"><a href="/"></a></div>
-    <nav id="topnav"><a href="/" id="topnav_current">首页</a><a href="/about">关于我</a><a href="/newlist">从前慢</a><a href="/program">程序园</a><a href="/music">弹指间</a></nav>
+    <nav id="topnav"><a href="/" id="topnav_current">首页</a><a href="/about">关于我</a><a href="/prose">从前慢</a><a href="/program">程序园</a><a href="/music">弹指间</a></nav>
   </header>
   <article>
     <div class="banner">
@@ -34,16 +34,16 @@
       <h2>
         <p><span>推荐</span>文章</p>
       </h2>
-      {% for blog in blogs %}
+      {% for article in articles %}
       <div class="blogs">
-        <h3><a href="/view?id={{ blog.id }}">{{ blog.title }}</a></h3>
+        <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
         <figure><img src="{{static_url("article/1.jpg")}}"></figure>
         <ul>
-          <p>{{ blog.article }}</p>
-          <a class="readmore" target="_blank" href="/view?id={{ blog.id }}">阅读全文&gt;&gt;</a>
+          <p>{{ article.title }}</p>
+          <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
         <p class="autor"><span>作者：刘小盼</span><span>分类：python</a></span><span>浏览（<a href="/">459</a>）</span><span>评论（<a href="/">30</a>）</span></p>
-        <div class="dateview">{{ blog.post_date }}</div>
+        <div class="dateview">{{ article.time }}</div>
       </div>
       {% end %}
     </div>
@@ -67,17 +67,13 @@
         <p class="tj_t1">最新文章</p>
       </h2>
       <ul>
-        {% for blog in blogs %}
         <li><a href="/">犯错了怎么办？</a></li>
-      {% end %}
       </ul>
       <h2>
         <p class="tj_t2">推荐文章</p>
       </h2>
       <ul>
-        {% for blog in blogs %}
         <li><a href="/">犯错了怎么办？</a></li>
-      {% end %}
       </ul>
     </div>
     <div class="links">
