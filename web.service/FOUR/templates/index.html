@@ -41,7 +41,7 @@
         <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
         <figure><img src="static/article/{{ article.title }}"></figure>
         <ul>
-          <div class="content_html">{{ article.content_md[0:120] }}.....
+          <div class="content_html">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ article.content_md[0:120] }}.....
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
         <p class="autor"><span>作者：刘小盼</span><span>分类：{{ article.sort }}</a></span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span><span>
@@ -96,8 +96,11 @@
         <p>友情链接</p>
       </h2>
       <ul>
-        <li><a href="https://github.com/Hackerl">My github</a></li>
-        <li><a href="https://www.91ri.org/">91Ri.org</a></li>
+        <li><a href="http://www.freebuf.com/" target="_blank">黑客与极客</a></li>
+        <li><a href="https://www.91ri.org/" target="_blank">安全攻防</a></li>
+        <li><a href="http://cha.hx99.net/" target="_blank">华西社工库</a></li>
+        <li><a href="http://tool.chinaz.com/" target="_blank">站长工具</a></li>
+        <li><a href="http://www.epubit.com.cn/" target="_blank">异步社区</a></li>
       </ul>
     </div>
     <div class="copyright">

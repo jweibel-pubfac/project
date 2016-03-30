@@ -6,8 +6,10 @@
 <meta content="个人博客模板,博客模板,响应式" name="keywords">
 <meta content="如影随形主题的个人博客模板，神秘、俏皮。" name="description">
 <link rel="stylesheet" href="{{static_url("css/base.css")}}">
+
 <link rel="stylesheet" href="{{static_url("css/style.css")}}">
 <link rel="stylesheet" href="{{static_url("css/media.css")}}">
+
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
 <!--[if lt IE 9]>
 <script src="{{static_url("js/modernizr.js")}}"></script>
@@ -33,7 +35,7 @@
     [<a href="/search?key={{ escape(label.detail) }}">{{ escape(label.detail) }}</a>]    
     {% end %}
 </span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span></div>
-          <p>{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
+          <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
         </ul>
         <figure><img src="static/article/{{article.title}}"></figure>
         <div class="dateview">{{article.time.date()}}</div>
@@ -62,7 +64,7 @@
     </div>
     <div class="ph_news">
       <h2>
-        <p>点击排行</p>
+        <p>剑冢</p>
       </h2>
       <ul class="ph_n">
         {% for i in range(hottotal) %}
@@ -75,26 +77,23 @@
         {% end %}
       </ul>
       <h2>
-        <p>栏目推荐</p>
+        <p>藏经</p>
       </h2>
+     <div class="tj_news"> 
       <ul>
-        <li><a href="/">有一种思念，是淡淡的幸福,一个心情一行文字</a></li>
-        <li><a href="/">励志人生-要做一个潇洒的女人</a></li>
-        <li><a href="/">女孩都有浪漫的小情怀&mdash;&mdash;浪漫的求婚词</a></li>
-        <li><a href="/">Green绿色小清新的夏天-个人博客模板</a></li>
-        <li><a href="/">女生清新个人博客网站模板</a></li>
-        <li><a href="/">Wedding-婚礼主题、情人节网站模板</a></li>
-        <li><a href="/">Column 三栏布局 个人网站模板</a></li>
-        <li><a href="/">时间煮雨-个人网站模板</a></li>
-        <li><a href="/">花气袭人是酒香&mdash;个人网站模板</a></li>
-
+        <li><a href="http://wx.ty2016.net/" target="_blank">武侠小说</a></li>
+        <li><a href="http://wulin.fhyx.com/" target="_blank">侠客风云传</a></li>
+        <li><a href="http://pcgame.uuu9.com/jymod.html#c" target="_blank">金庸群侠传</a></li>
+        <li><a href="http://pal5.baiyou100.com/pal/index.html" target="_blank">仙剑奇侠传</a></li>
+        <li><a href="http://www.tudou.com/programs/view/2nhluKyzrvs/" target="_blank">那些年，大侠梦</a></li>
       </ul>
+       </div>
       <h2>
-        <p>最新评论</p>
+        <p>论剑</p>
       </h2>
       <ul class="pl_n">
         <dl>
-          <dt><img src="images/s8.jpg"> </dt>
+          <dt><img src="static/images/s8.jpg"> </dt>
           <dt> </dt>
           <dd>DanceSmile
             <time>49分钟前</time>
@@ -102,7 +101,7 @@
           <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
         </dl>
         <dl>
-          <dt><img src="images/s7.jpg"> </dt>
+          <dt><img src="static/images/s7.jpg"> </dt>
           <dt> </dt>
           <dd>yisa
             <time>2小时前</time>
@@ -110,7 +109,7 @@
           <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
         </dl>
         <dl>
-          <dt><img src="images/s6.jpg"> </dt>
+          <dt><img src="static/images/s6.jpg"> </dt>
           <dt> </dt>
           <dd>小林博客
             <time>8月7日</time>
@@ -118,7 +117,7 @@
           <dd><a href="/">博客色彩丰富，很是好看</a></dd>
         </dl>
         <dl>
-          <dt><img src="images/003.jpg"> </dt>
+          <dt><img src="static/images/003.jpg"> </dt>
           <dt> </dt>
           <dd>DanceSmile
             <time>49分钟前</time>
@@ -126,7 +125,7 @@
           <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
         </dl>
         <dl>
-          <dt><img src="images/002.jpg"> </dt>
+          <dt><img src="static/images/002.jpg"> </dt>
           <dt> </dt>
           <dd>yisa
             <time>2小时前</time>
@@ -134,13 +133,6 @@
           <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
         </dl>
       </ul>
-      <h2>
-        <p>最近访客</p>
-      </h2>
-        <ul>
-          <img src="images/vis.jpg"><!-- 直接使用“多说”插件的调用代码 -->
-        </ul>
-
     </div>
     <div class="copyright">
       <ul>
