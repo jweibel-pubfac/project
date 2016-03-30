@@ -28,7 +28,11 @@
       <div class="newblog">
         <ul>
           <h3><a href="/article/{{article.id}}">{{article.title}}</a></h3>
-          <div class="autor"><span>作者：刘小盼</span><span>分类：[<a href="/">日记</a>]</span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span></div>
+          <div class="autor"><span>作者：刘小盼</span><span>分类：
+    {% for label in article.labels %}
+    [<a href="/search?key={{ escape(label.detail) }}">{{ escape(label.detail) }}</a>]    
+    {% end %}
+</span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span></div>
           <p>{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
         </ul>
         <figure><img src="static/article/{{article.title}}"></figure>

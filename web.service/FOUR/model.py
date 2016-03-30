@@ -114,10 +114,14 @@ class Auth(object):
 class Search(object):
     @classmethod
     def all(cls, db, key):
-        results = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time \
+        results = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort\
                 FROM article a, label l \
                 WHERE a.id = l.article_id AND l.detail = %s \
                 ORDER BY time DESC', key)
+        hot = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort\
+                FROM article a, label l \
+                WHERE a.id = l.article_id AND l.detail = %s \
+                ORDER BY visit DESC', key)
         for result in results:
             result['labels'] = Label.all(db, result.id)
-        return results
+        return results,hot

@@ -9,6 +9,7 @@
 <link href="{{static_url("css/base.css")}}" rel="stylesheet">
 <link href="{{static_url("css/index.css")}}" rel="stylesheet">
 <link href="{{static_url("css/media.css")}}" rel="stylesheet">
+
 <link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_popup.css?v=240f357d.css">
 <link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_32.css">
 <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0">
@@ -35,7 +36,6 @@
       <h2>
         <p><span>推荐</span>文章</p>
       </h2>
-      
       {% for article in articles %}
       <div class="blogs">
         <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
@@ -55,6 +55,9 @@
       </div>
       {% end %}
     </div>
+{% block page %}
+
+{% end %}
   </article>
   <aside>
     <div class="avatar"><a href="/about"><span>关于刘小盼</span></a></div>

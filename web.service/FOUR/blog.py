@@ -25,7 +25,7 @@ class Application(tornado.web.Application):
             (r'/preview', PreviewHandler),
             (r'/article/edit/(\d+)', EditArticleHandler),
             (r'/article/delete/(\d+)', DeleteHandler),
-
+            (r'/search', SearchHandler),
             (r'/article/update/(\d+)', UpdateArticleHandler),
             (r'/login', LoginHandler),
             (r'/logout', LogoutHandler),
@@ -87,10 +87,7 @@ class ProseHandler(BaseHandler):
         total=p.count
         hottotal=h.count
         page_count=p.page_range
-        try:
-            nowpage=int(self.get_argument('page'))
-        except:
-            nowpage=int(1)
+        nowpage = int(self.get_argument('page', '1'))
         hots=h.page(1)
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
@@ -105,10 +102,7 @@ class ProgramHandler(BaseHandler):
         total=p.count
         hottotal=h.count
         page_count=p.page_range
-        try:
-            nowpage=int(self.get_argument('page'))
-        except:
-            nowpage=int(1)
+        nowpage = int(self.get_argument('page', '1'))
         hots=h.page(1)
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
@@ -142,6 +136,10 @@ class ArticleListHandler(BaseHandler):
 
 class ArticleHandler(BaseHandler):
     def get(self, id):
+        other,hot=Article.all(self.db)
+        h = Paginator(hot, 7)
+        hots=h.page(1)
+        hottotal=h.count
         article,up,dn,relevant = Article.get(self.db, id)
         if article is None:
             error = '404: Page Not Found'
@@ -149,7 +147,7 @@ class ArticleHandler(BaseHandler):
         else:
             isAdmin = self.isAdmin()
             label_list = Label.group(self.db)
-            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant)
+            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hots.object_list,hottotal=hottotal)
 
 
 class PreviewHandler(BaseHandler):
@@ -276,20 +274,26 @@ class CreateArticleHandler(BaseHandler):
 class SearchHandler(BaseHandler):
     def get(self):
         key = self.get_argument('key', '').strip()
-        pageId = int(self.get_argument('page', '1'))
+        nowpage = int(self.get_argument('page', '1'))
         if len(key) == 0:
-            results = Article.all(self.db)
+            results,hot = Article.all(self.db)
+            
         else:
-            results = Search.all(self.db, key)
+            results,hot= Search.all(self.db, key)
         p = Paginator(results, 5)
-        page = p.page(pageId)
+        total=p.count
+        page = p.page(nowpage)
+        page_count=p.page_range
+
+        h = Paginator(hot, 7)
+        hots=h.page(1)
+        hottotal=h.count
+
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
 
         self.render('search.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page, home_title=options.home_title,
-                user=options.user, photo=options.photo)
-
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
 
 class LoginHandler(BaseHandler):
     def get(self):
