@@ -9,18 +9,21 @@ class Article(object):
     @classmethod
     def all(cls, db,sort=None):
         if sort:
+            hot=db.query("SELECT * FROM article where sort=%s ORDER BY visit DESC ",sort)
             articles = db.query("SELECT * FROM article where sort=%s ORDER BY time DESC",sort)
             for article in articles:
                 article['labels'] = Label.all(db, article.id)
-            return articles
+            return articles,hot
         else:
+            hot=db.query(" SELECT * FROM article ORDER BY visit DESC")
             articles = db.query("SELECT * FROM article ORDER BY time DESC")
             for article in articles:
                 article['labels'] = Label.all(db, article.id)
-            return articles            
+            return articles,hot     
 
     @classmethod
     def get(cls, db, id):
+        db.execute("UPDATE article set visit=visit+1 WHERE id=%s",id)
         article = db.get('SELECT * FROM article WHERE id = %s', id)
         try:
             relevant=db.query('SELECT * FROM article WHERE (sort = %s and id<> %s )',article.sort,article.id)

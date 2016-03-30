@@ -11,8 +11,7 @@ import re
 from model import Article, Label, Auth, Search
 from component import Paginator
 from tornado.options import define, options
-
-
+oldimage=''
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -82,40 +81,52 @@ class MusicHandler(BaseHandler):
         self.render("music.html")
 class ProseHandler(BaseHandler):
     def get(self):
-        p = Paginator(Article.all(self.db,'prose'), 5)
+        articles,hot=Article.all(self.db,'prose')
+        p = Paginator(articles, 5)
+        h = Paginator(hot, 7)
         total=p.count
+        hottotal=h.count
         page_count=p.page_range
         try:
             nowpage=int(self.get_argument('page'))
         except:
             nowpage=int(1)
+        hots=h.page(1)
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('prose.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
 class ProgramHandler(BaseHandler):
     def get(self):
-        p = Paginator(Article.all(self.db,'program'), 5)
+        articles,hot=Article.all(self.db,'program')
+        p = Paginator(articles, 5)
+        h = Paginator(hot, 7)
         total=p.count
+        hottotal=h.count
         page_count=p.page_range
         try:
             nowpage=int(self.get_argument('page'))
         except:
             nowpage=int(1)
+        hots=h.page(1)
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('program.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
 class HomeHandler(BaseHandler):
     def get(self):
-        p = Paginator(Article.all(self.db), 5)
+        articles,hot=Article.all(self.db)
+        p= Paginator(articles, 5)
         page = p.page(1)
+        h = Paginator(hot, 7)
+        hots=h.page(1)
+        hottotal=h.count
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('index.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page)
+                isAdmin=isAdmin, page=page,hots=hots.object_list,hottotal=hottotal)
 
 
 class ArticleListHandler(BaseHandler):
@@ -189,26 +200,46 @@ class EditArticleHandler(BaseHandler):
             self.render('error.html', error=error, home_title=options.home_title)
         else:
             labels = ' '.join(map(lambda item: '[' + item['detail'] + ']', article['labels']))
+            global oldimage
+            oldimage=article.title
             self.render('editArticle.html', article=article, labels=labels)
 
 
 class UpdateArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, id):
+        global oldimage
         title = self.get_argument('title')
         content_md = self.get_argument('content')
         sort = self.get_argument('sort')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
+        try:
+            file_metas = self.request.files["image"]
+            os.remove(os.path.join('static/article', oldimage))
+            for meta in file_metas:
+                filename = title
+                filepath = os.path.join('static/article', title)
+                if not os.path.isfile(filepath):
+                # 有些文件需要已二进制的形式存储，实际中可以更改
+                    with open(filepath, 'wb') as up:
+                        up.write(meta['body'])
 
+        except:
+            print(oldimage,title)
+            if title==oldimage:
+                pass
+            else:
+                print(oldimage)
+                os.rename(os.path.join('static/article',oldimage), os.path.join('static/article',title))
         try:
             Article.update(self.db, id, title, content_md, content_html,sort)
             Label.deleteAll(self.db, id)
             for label in labels:
                 detail = label[1:-1].strip()
                 Label.create(self.db, id, detail)
-
+            Article.new(self.db)
             self.redirect('/article/' + id, permanent=True)
         except:
             error = "The post data invalid"
