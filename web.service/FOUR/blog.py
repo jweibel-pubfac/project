@@ -30,7 +30,6 @@ class Application(tornado.web.Application):
             (r'/login', LoginHandler),
             (r'/logout', LogoutHandler),
             (r'/auth', AuthHandler),
-            (r'/page/(\d+)', ArticleListHandler),
         ]
         settings = dict(
             static_path=os.path.join(os.path.dirname(__file__), 'static'),
@@ -83,63 +82,85 @@ class ProseHandler(BaseHandler):
     def get(self):
         articles,hot=Article.all(self.db,'prose')
         p = Paginator(articles, 5)
-        h = Paginator(hot, 7)
         total=p.count
-        hottotal=h.count
+        hottotal=len(hot)
         page_count=p.page_range
         nowpage = int(self.get_argument('page', '1'))
-        hots=h.page(1)
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('prose.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal)
 class ProgramHandler(BaseHandler):
     def get(self):
-        articles,hot=Article.all(self.db,'program')
-        p = Paginator(articles, 5)
-        h = Paginator(hot, 7)
-        total=p.count
-        hottotal=h.count
-        page_count=p.page_range
         nowpage = int(self.get_argument('page', '1'))
-        hots=h.page(1)
+        articles,hot=Article.all(self.db,'program')
+        python=[[] for i in range(len(articles)/8+1)]
+        i=0
+        for i in range(len(articles)):
+            for label in articles[i].labels:
+                if 'python' in label.detail:
+                    python[i/8].append(articles[i])
+                    i+=1
+        js=[[] for i in range(len(articles)/8+1)]
+        i=0
+        for i in range(len(articles)):
+            for label in  articles[i].labels:
+                if 'javascript' in label.detail:
+                    js[i/8].append(articles[i])
+                    i+=1
+        security=[[] for i in range(len(articles)/8+1)]
+        i=0
+        for i in range(len(articles)):
+            for label in  articles[i].labels:
+                if 'security' in label.detail:
+                    security[i/8].append(articles[i])
+                    i+=1
+        if nowpage>len(python):
+            pyarticle=python[-1]
+        else:
+            pyarticle=python[nowpage-1]
+        if nowpage>len(js):
+            jsarticle=js[-1]
+        else:
+            jsarticle=js[nowpage-1]
+        if nowpage>len(security):
+            searticle=security[-1]
+        else:
+            searticle=security[nowpage-1]
+        p = Paginator(articles,8)
+        total=p.count
+        hottotal=len(hot)
+        page_count=[i+1 for i in range(max(len(python),len(js),len(security)))]
+        if nowpage>page_count:
+            now=page_count
+        else:
+            now=nowpage
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
-        self.render('program.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
+        self.render('program.html',label_list=label_list,
+                isAdmin=isAdmin,total=total,page_count=page_count\
+             ,nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle)
 class HomeHandler(BaseHandler):
     def get(self):
+        nowpage = int(self.get_argument('page', '1'))
         articles,hot=Article.all(self.db)
         p= Paginator(articles, 5)
-        page = p.page(1)
-        h = Paginator(hot, 7)
-        hots=h.page(1)
-        hottotal=h.count
+        total=p.count
+        page = p.page(nowpage)
+        page_count=p.page_range
+        hottotal=len(hot)
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
         self.render('index.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page,hots=hots.object_list,hottotal=hottotal)
-
-
-class ArticleListHandler(BaseHandler):
-    def get(self, pageId):
-        p = Paginator(Article.all(self.db), 5)
-        total= p.count
-        page = p.page(int(pageId))
-        isAdmin = self.isAdmin()
-        label_list = Label.group(self.db)
-        self.render('index.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin, page=page,total=total)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,new=articles)
 
 
 class ArticleHandler(BaseHandler):
     def get(self, id):
         other,hot=Article.all(self.db)
-        h = Paginator(hot, 7)
-        hots=h.page(1)
-        hottotal=h.count
+        hottotal=len(hot)
         article,up,dn,relevant = Article.get(self.db, id)
         if article is None:
             error = '404: Page Not Found'
@@ -147,7 +168,7 @@ class ArticleHandler(BaseHandler):
         else:
             isAdmin = self.isAdmin()
             label_list = Label.group(self.db)
-            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hots.object_list,hottotal=hottotal)
+            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hot,hottotal=hottotal)
 
 
 class PreviewHandler(BaseHandler):
@@ -159,14 +180,17 @@ class PreviewHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
-        file_metas = self.request.files["image"]
-        for meta in file_metas:
-            filename = title
-            filepath = os.path.join('static/article', title)
-            if not os.path.isfile(filepath):
+        try:
+            file_metas = self.request.files["image"]
+            for meta in file_metas:
+                filename = title
+                filepath = os.path.join('static/article', title)
+                if not os.path.isfile(filepath):
                 # 有些文件需要已二进制的形式存储，实际中可以更改
-                with open(filepath, 'wb') as up:
-                    up.write(meta['body'])
+                    with open(filepath, 'wb') as up:
+                        up.write(meta['body'])
+        except:
+            pass
         article = {}
         article['sort']=sort
         article['title'] = title
@@ -215,7 +239,8 @@ class UpdateArticleHandler(BaseHandler):
         content_html = markdown.markdown(content_md, ['codehilite'])
         try:
             file_metas = self.request.files["image"]
-            os.remove(os.path.join('static/article', oldimage))
+            if os.path.isfile(os.path.join('static/article',oldimage)):
+                os.remove(os.path.join('static/article', oldimage))
             for meta in file_metas:
                 filename = title
                 filepath = os.path.join('static/article', title)
@@ -225,12 +250,11 @@ class UpdateArticleHandler(BaseHandler):
                         up.write(meta['body'])
 
         except:
-            print(oldimage,title)
             if title==oldimage:
                 pass
             else:
-                print(oldimage)
-                os.rename(os.path.join('static/article',oldimage), os.path.join('static/article',title))
+                if os.path.isfile(os.path.join('static/article',oldimage)):
+                    os.rename(os.path.join('static/article',oldimage), os.path.join('static/article',title))
         try:
             Article.update(self.db, id, title, content_md, content_html,sort)
             Label.deleteAll(self.db, id)
@@ -285,15 +309,13 @@ class SearchHandler(BaseHandler):
         page = p.page(nowpage)
         page_count=p.page_range
 
-        h = Paginator(hot, 7)
-        hots=h.page(1)
-        hottotal=h.count
+        hottotal=len(hot)
 
         isAdmin = self.isAdmin()
         label_list = Label.group(self.db)
 
         self.render('search.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hots.object_list,hottotal=hottotal)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,key=key)
 
 class LoginHandler(BaseHandler):
     def get(self):

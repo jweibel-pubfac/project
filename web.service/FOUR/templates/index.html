@@ -56,6 +56,30 @@
       {% end %}
     </div>
 {% block page %}
+    <div class="page"><a title="Total record"><b>{{total}}</b></a>
+    {% if len(page_count)>8 %}
+    {% for i in page_count[nowpage-4:nowpage+4] %}
+       {% if i==nowpage %}
+         <b>{{i}}</b>
+       {% else %}
+       <a href="/?page={{i}}">{{i}}</a>
+       {% end %}
+{% end %}
+   {% if nowpage != page_count[-1] %}
+      <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
+   {% end %}
+   {% else %}
+        {% for i in page_count[:] %}
+       {% if i==nowpage %}
+         <b>{{i}}</b>
+       {% else %}
+       <a href="/?page={{i}}">{{i}}</a>
+       {% end %}
+{% end %}
+   {% if nowpage != page_count[-1] %}
+      <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
+   {% end %}
+{% end %}
 
 {% end %}
   </article>
@@ -78,16 +102,20 @@
         <p class="tj_t1">最新文章</p>
       </h2>
       <ul>
-        {% for article in articles %}
-        <li><a href="article/{{article.id}}">{{article.title}}</a></li>
+        {% for i in range(len(new)) %}
+        {% if i<7%}
+        <li><a href="article/{{new[i].id}}">{{new[i].title}}</a></li>
+        {% end %}
         {% end %}
       </ul>
       <h2>
         <p class="tj_t2">推荐文章</p>
       </h2>
       <ul>
-        {% for hot in hots %}
-        <li><a href="article/{{hot.id}}">{{hot.title}}</a></li>
+        {% for i in range(hottotal) %}
+            {% if i<7%}
+        <li><a href="article/{{hots[i].id}}">{{hots[i].title}}</a></li>
+        {%end%}
         {%end%}
       </ul>
     </div>
