@@ -5,7 +5,6 @@
 <title>The hackerl</title>
 <meta content="个人博客模板,博客模板,响应式" name="keywords">
 <meta content="如影随形主题的个人博客模板，神秘、俏皮。" name="description">
-<link rel="icon" href="/static/img/favicon.ico" type="image/x-icon" />
 <link href="{{static_url("css/base.css")}}" rel="stylesheet">
 <link href="{{static_url("css/index.css")}}" rel="stylesheet">
 <link href="{{static_url("css/media.css")}}" rel="stylesheet">
@@ -23,7 +22,7 @@
     <h1>如影随形</h1>
     <h2>影子是一个会撒谎的精灵，它在虚空中流浪和等待被发现之间;在存在与不存在之间....</h2>
     <div class="logo"><a href="/"></a></div>
-    <nav id="topnav"><a href="/" id="topnav_current">首页</a><a href="/about">关于我</a><a href="/prose">从前慢</a><a href="/program">程序园</a><a href="/music">弹指间</a></nav>
+    <nav id="topnav"><a href="/" id="topnav_current">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
   </header>
   <article>
     <div class="banner">
@@ -44,7 +43,7 @@
           <div class="content_html">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ article.content_md[0:120] }}.....
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
-        <p class="autor"><span>作者：刘小盼</span><span>分类：{{ article.sort }}</a></span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span><span>
+        <p class="autor"><span>作者：刘小盼</span><span>分类：{{ article.sort }}</a></span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span><span>
         {% if isAdmin %}
         <small><a href="/createArticle">[新建]</a></small>
         <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
@@ -140,6 +139,19 @@
     </div>
   </aside>
   <script src="{{static_url("js/modernizr.js")}}"></script>
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hackerl"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
   <div class="clear"></div>
   <!-- 清除浮动 --> 
 </div>
