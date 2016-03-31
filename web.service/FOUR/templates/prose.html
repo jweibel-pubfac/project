@@ -34,7 +34,7 @@
     {% for label in article.labels %}
     [<a href="/search?key={{ escape(label.detail) }}">{{ escape(label.detail) }}</a>]    
     {% end %}
-</span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span>评论（<a href="/">30</a>）</span></div>
+</span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></div>
           <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
         </ul>
         <figure><img src="static/article/{{article.title}}"></figure>
@@ -143,6 +143,18 @@
     </div>
   </aside>
 <script src="{{static_url("js/modernizr.js")}}"></script>
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hackerl"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
   <div class="clear"></div>
   <!-- 清除浮动 --> 
 </div>

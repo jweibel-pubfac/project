@@ -6,6 +6,7 @@
 <link href="{{static_url("css/base.css")}}" rel="stylesheet">
 <link href="{{static_url("css/style.css")}}" rel="stylesheet">
 <link href="{{static_url("css/media.css")}}" rel="stylesheet">
+
 <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0" name="viewport">
 <!--[if lt IE 9]>
 <script src="{{static_url("js/modernizr.js")}}"></script>
@@ -48,7 +49,7 @@
     {% block articles %}
     <div class="index_about">
       <h2 class="c_titile">{{ escape(article.title) }}</h2>
-      <p class="box_c"><span class="d_time">发布时间：{{ article.time}}</span><span>编辑：刘小盼</span><span>浏览（{{article.visit}}）</span><span>评论览（14）</span></p>
+      <p class="box_c"><span class="d_time">发布时间：{{ article.time}}</span><span>编辑：刘小盼</span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></p>
         {% if isAdmin %}
         <small><a href="/createArticle">[新建]</a></small>
         <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
@@ -75,6 +76,24 @@
         {% end %}
       </div>
      {%end%}
+<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key={{ article.id }} data-title={{ article.title }} data-url="article/{{ article.id }}"></div>
+<!-- 多说评论框 end -->
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hackerl"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
+
+
      {% block relevant %}
       <div class="otherlink">
         <h2>相关文章</h2>
@@ -114,67 +133,22 @@
       <h2>
         <p>栏目推荐</p>
       </h2>
+<div class="tj_news">
       <ul>
-        <li><a href="/">有一种思念，是淡淡的幸福,一个心情一行文字</a></li>
-        <li><a href="/">励志人生-要做一个潇洒的女人</a></li>
-        <li><a href="/">女孩都有浪漫的小情怀&mdash;&mdash;浪漫的求婚词</a></li>
-        <li><a href="/">Green绿色小清新的夏天-个人博客模板</a></li>
-        <li><a href="/">女生清新个人博客网站模板</a></li>
-        <li><a href="/">Wedding-婚礼主题、情人节网站模板</a></li>
-        <li><a href="/">Column 三栏布局 个人网站模板</a></li>
-        <li><a href="/">时间煮雨-个人网站模板</a></li>
-        <li><a href="/">花气袭人是酒香&mdash;个人网站模板</a></li>
+        <li><a href="www.freebuf.com/tools/48016.html">SSL中间人</a></li>
+        <li><a href="www.freebuf.com/articles/wireless/69840.html">WIFI钓鱼</a></li>
+        <li><a href="https://www.91ri.org/7170.html">社会工程学(SET)</a></li>
+        <li><a href="http://www.runoob.com/python/python-xml.html">python xml解析</a></li>
+        <li><a href="http://blog.just4fun.site/pyspider-demo.html">pyspider</a></li>
+        <li><a href="https://www.91ri.org/15204.html">WIFI绵羊墙</a></li>
+        <li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">字符编码</a></li>
+        <li><a href="http://evilcos.me/">EVILCOS黑客那种邪气</a></li>
+        <li><a href="www.s0nnet.com/archives/mitmf">MITMF内网劫持新姿态</a></li>
       </ul>
-      <h2>
-        <p>最新评论</p>
-      </h2>
-      <ul class="pl_n">
-        <dl>
-          <dt><img src="images/s8.jpg"> </dt>
-          <dt> </dt>
-          <dd>DanceSmile
-            <time>49分钟前</time>
-          </dd>
-          <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
-        </dl>
-        <dl>
-          <dt><img src="images/s7.jpg"> </dt>
-          <dt> </dt>
-          <dd>yisa
-            <time>2小时前</time>
-          </dd>
-          <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
-        </dl>
-        <dl>
-          <dt><img src="images/s6.jpg"> </dt>
-          <dt> </dt>
-          <dd>小林博客
-            <time>8月7日</time>
-          </dd>
-          <dd><a href="/">博客色彩丰富，很是好看</a></dd>
-        </dl>
-        <dl>
-          <dt><img src="images/003.jpg"> </dt>
-          <dt> </dt>
-          <dd>DanceSmile
-            <time>49分钟前</time>
-          </dd>
-          <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
-        </dl>
-        <dl>
-          <dt><img src="images/002.jpg"> </dt>
-          <dt> </dt>
-          <dd>yisa
-            <time>2小时前</time>
-          </dd>
-          <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
-        </dl>
-      </ul>
+</div>
       <h2>
         <p>最近访客</p>
-        <ul>
-          <img src="images/vis.jpg"><!-- 直接使用“多说”插件的调用代码 -->
-        </ul>
+<ul class="ds-recent-visitors" data-num-items="24"></ul>
       </h2>
     </div>
     <div class="copyright">

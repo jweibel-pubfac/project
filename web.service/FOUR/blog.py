@@ -8,10 +8,13 @@ import os.path
 import markdown
 import ConfigParser
 import re
+from duoshuo import DuoshuoAPI
 from model import Article, Label, Auth, Search
 from component import Paginator
 from tornado.options import define, options
 oldimage=''
+api = DuoshuoAPI(short_name='hackerl', secret='Liukong052997')
+
 class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
@@ -95,27 +98,29 @@ class ProgramHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
         articles,hot=Article.all(self.db,'program')
-        python=[[] for i in range(len(articles)/8+1)]
-        i=0
-        for i in range(len(articles)):
-            for label in articles[i].labels:
+        python=[[]]
+        js=[[]]
+        security=[[]]
+        p=0
+        j=0
+        s=0
+        for article in articles:
+            for label in article.labels:
                 if 'python' in label.detail:
-                    python[i/8].append(articles[i])
-                    i+=1
-        js=[[] for i in range(len(articles)/8+1)]
-        i=0
-        for i in range(len(articles)):
-            for label in  articles[i].labels:
+                    if p % 8 == 0 and p != 0:
+                        python.append([])
+                    python[p/8].append(article)
+                    p+=1
                 if 'javascript' in label.detail:
-                    js[i/8].append(articles[i])
-                    i+=1
-        security=[[] for i in range(len(articles)/8+1)]
-        i=0
-        for i in range(len(articles)):
-            for label in  articles[i].labels:
+                    if j % 8 == 0 and j != 0:
+                        js.append([])
+                    js[j/8].append(article)
+                    j+=1
                 if 'security' in label.detail:
-                    security[i/8].append(articles[i])
-                    i+=1
+                    if s % 8 == 0 and s != 0:
+                        security.append([])
+                    security[s/8].append(article)
+                    s+=1
         if nowpage>len(python):
             pyarticle=python[-1]
         else:
@@ -315,7 +320,7 @@ class SearchHandler(BaseHandler):
         label_list = Label.group(self.db)
 
         self.render('search.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,key=key)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,key=key,new=results)
 
 class LoginHandler(BaseHandler):
     def get(self):

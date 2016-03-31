@@ -212,6 +212,7 @@ aside { width: 27%; background: url(../images/ibodybg.png) -170px -147px no-repe
     cursor: pointer;
 }
 
+
 #operation {
     position: fixed;
     top: 43%;
@@ -238,6 +239,8 @@ aside { width: 27%; background: url(../images/ibodybg.png) -170px -147px no-repe
     display: inline-block;
     width: 30px;
 }
+
+
 
 .article {
     font-size: 15px;
