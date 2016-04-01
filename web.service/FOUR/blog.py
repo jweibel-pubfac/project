@@ -83,14 +83,14 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class AboutHandler(BaseHandler):
     def get(self):
-        self.render("about.html")
+        self.render("about.html",home_title=options.home_title)
 class MusicHandler(BaseHandler):
     def get(self):
-        self.render("music.html")
+        self.render("music.html",home_title=options.home_title)
 class ProseHandler(BaseHandler):
     def get(self):
         articles,hot=Article.all(self.db,'prose')
-        p = Paginator(articles, 5)
+        p = Paginator(articles, 6)
         total=p.count
         hottotal=len(hot)
         page_count=p.page_range
@@ -98,7 +98,7 @@ class ProseHandler(BaseHandler):
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         self.render('prose.html',articles=page.object_list,isAdmin=isAdmin,total=total,
-                     page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal)
+                     page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,home_title=options.home_title)
 class ProgramHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
@@ -151,7 +151,7 @@ class ProgramHandler(BaseHandler):
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         self.render('program.html',isAdmin=isAdmin,total=total,page_count=page_count,
-                     nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle)
+                     nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle,home_title=options.home_title)
 class HomeHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
@@ -165,7 +165,8 @@ class HomeHandler(BaseHandler):
         #如果想加入标签列表，可在模板中加入label_list
         label_list = Label.group(self.db)
         self.render('index.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,new=articles)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,
+                    hots=hot,hottotal=hottotal,new=articles,home_title=options.home_title)
 
 class ArticleHandler(BaseHandler):
     def get(self, id):
@@ -178,7 +179,8 @@ class ArticleHandler(BaseHandler):
             self.render('error.html', error=error, home_title=options.home_title)
         else:
             isAdmin = self.isAdmin()
-            self.render('article.html', article=article, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hot,hottotal=hottotal)
+            self.render('article.html', article=article, isAdmin=isAdmin,
+             up=up,dn=dn,relevants=relevant,hots=hot,hottotal=hottotal,home_title=options.home_title)
 
 
 class PreviewHandler(BaseHandler):
@@ -330,7 +332,7 @@ class SearchHandler(BaseHandler):
 
         self.render('search.html', articles=page.object_list, label_list=label_list,
                 isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,
-                                                      hottotal=hottotal,key=key,new=results)
+                       hottotal=hottotal,key=key,new=results,home_title=options.home_title)
 
 class LoginHandler(BaseHandler):
     def get(self):
