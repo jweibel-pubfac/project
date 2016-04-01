@@ -11,6 +11,9 @@ python-web.service:<br>
 > THREE：p2p文件分享<br>
 > XML-RPC远程过程调用所写<br>
 > 六次递归查询邻居的邻居共享文件<br>
+> FOUR：tornado所写个人博客<br>
+> 初始化后，运行blog.py即可<br>
+> 也可自己修改，更改前端页面<br>
 
 Game:<br>
 > 2048：个人参照教程，所写2048游戏源码<br>
