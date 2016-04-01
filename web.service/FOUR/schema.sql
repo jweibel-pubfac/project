@@ -10,7 +10,9 @@ CREATE TABLE article (
     title VARCHAR(50) NOT NULL, 
     content_md MEDIUMTEXT NOT NULL, 
     content_html MEDIUMTEXT NOT NULL, 
-    time DATETIME NOT NULL
+    time DATETIME NOT NULL,
+    sort text not null,
+    visit int(9) Default 0
 );
 
 CREATE TABLE label (

@@ -27,8 +27,8 @@
   <article>
     <div class="banner">
       <ul class="texts">
-        <p>The best life is use of willing attitude, a happy-go-lucky life. </p>
-        <p>最好的生活是用心甘情愿的态度，过随遇而安的生活。</p>
+        <p>每个人心中都有一个地方</p>
+        <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp谓之江湖</p>
       </ul>
     </div>
     <div class="bloglist">
@@ -43,7 +43,7 @@
           <div class="content_html">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ article.content_md[0:120] }}.....
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
-        <p class="autor"><span>作者：刘小盼</span><span>分类：{{ article.sort }}</a></span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span><span>
+        <p class="autor"><span>作者：刘小盼</span><span>分类：<a href="/{{ article.sort }}">{{ article.sort }}</a></span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span><span>
         {% if isAdmin %}
         <small><a href="/createArticle">[新建]</a></small>
         <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
@@ -57,26 +57,30 @@
 {% block page %}
     <div class="page"><a title="Total record"><b>{{total}}</b></a>
     {% if len(page_count)>8 %}
-    {% for i in page_count[nowpage-4:nowpage+4] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/?page={{i}}">{{i}}</a>
-       {% end %}
-{% end %}
-   {% if nowpage != page_count[-1] %}
-      <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
-   {% end %}
+        {% for i in page_count[nowpage-4:nowpage+4] %}
+            {% if i==nowpage %}
+                  <b>{{i}}</b>
+            {% else %}
+                  <a href="/?page={{i}}">{{i}}</a>
+            {% end %}
+        {% end %}
+        {% if page_count!=[] %}
+              {% if nowpage != page_count[-1] %}
+                    <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
+              {% end %}
+        {% end %}
    {% else %}
         {% for i in page_count[:] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/?page={{i}}">{{i}}</a>
-       {% end %}
-{% end %}
-   {% if nowpage != page_count[-1] %}
-      <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
+               {% if i==nowpage %}
+                       <b>{{i}}</b>
+                {% else %}
+                       <a href="/?page={{i}}">{{i}}</a>
+                {% end %}
+         {% end %}
+   {% if page_count!=[] %}
+            {% if nowpage != page_count[-1] %}
+                   <a href="/?page={{nowpage+1}}">&gt;</a><a href="/?page={{page_count[-1]}}">&gt;&gt;</a></div>
+            {% end %}
    {% end %}
 {% end %}
 
@@ -85,8 +89,8 @@
   <aside>
     <div class="avatar"><a href="/about"><span>关于刘小盼</span></a></div>
     <div class="topspaceinfo">
-      <h1>相濡以沫，不如相忘于江湖</h1>
-      <p>惟江上之清风，山间之明月....</p>
+      <h1>剑舞狂歌，酒放豪肠</h1>
+      <p>七分酿成月光，三分啸成剑气....</p>
     </div>
     <div class="about_c">
       <p>网名：Hackerl | 江湖风轻</p>
@@ -95,7 +99,7 @@
       <p>电话：13870675448</p>
       <p>邮箱：490021209@qq.com</p>
     </div>
-    <div class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1459145422299"><a title="分享到QQ空间" data-cmd="qzone" class="bds_qzone" href="#"></a><a title="分享到新浪微博" data-cmd="tsina" class="bds_tsina" href="#"></a><a title="分享到腾讯微博" data-cmd="tqq" class="bds_tqq" href="#"></a><a title="分享到人人网" data-cmd="renren" class="bds_renren" href="#"></a><a title="分享到微信" data-cmd="weixin" class="bds_weixin" href="#"></a><a data-cmd="more" class="bds_more" href="#"></a></div>
+    <div class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1459145422299"><a title="分享到QQ空间" data-cmd="qzone" class="bds_qzone" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=www.hackerl.com"></a><a title="分享到新浪微博" data-cmd="tsina" class="bds_tsina" href="http://service.weibo.com/share/share.php?url=www.hackerl.com%&appkey=&title=&pic=&ralateUid=&language="></a><a title="分享到腾讯微博" data-cmd="tqq" class="bds_tqq" href="http://share.v.t.qq.com/index.php?c=share&a=index&url=www.hackerl.com"></a><a title="分享到人人网" data-cmd="renren" class="bds_renren" href="http://widget.renren.com/dialog/share?url=http://www.hackerl.com"></a><a title="分享到微信" data-cmd="weixin" class="bds_weixin" href="#"></a><a data-cmd="more" class="bds_more" href="#"></a></div>
     <div class="tj_news">
       <h2>
         <p class="tj_t1">最新文章</p>

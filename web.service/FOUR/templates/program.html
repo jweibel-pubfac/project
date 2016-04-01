@@ -24,15 +24,15 @@
     <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program" id="topnav_current">试剑亭</a><a href="/music">绿竹巷</a></nav>
   </header>
   <article>
-    <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="1/">试剑亭</a></h2>
+    <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/program">试剑亭</a></h2>
     <div class="template">
       <h3>
         <p><span>python</span></p>
         <a class="more" href="/search?key=python">更多&gt;&gt;</a> </h3>
       <ul>
    {%for article in python%}
-        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
-      {% end %}
+         <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+   {% end %}
       </ul>
       <h3>
         <p><span>javascript</span></p>
@@ -40,36 +40,36 @@
       <ul>
    {%for article in js%}
         <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
-      {% end %}
+   {% end %}
       </ul>
       <h3>
         <p><span>security</span></p>
         <a class="more" href="/search?key=security">更多&gt;&gt;</a> </h3>
       <ul>
-       {%for article in security%}
+   {%for article in security%}
         <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
-      {% end %}
+   {% end %}
       </ul>
     </div>
     <div class="page"><a title="Total record"><b>{{total}}</b></a>
     {% if len(page_count)>8 %}
-    {% for i in page_count[nowpage-4:nowpage+4] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/program?page={{i}}">{{i}}</a>
+        {% for i in page_count[nowpage-4:nowpage+4] %}
+           {% if i==nowpage %}
+             <b>{{i}}</b>
+           {% else %}
+           <a href="/program?page={{i}}">{{i}}</a>
+           {% end %}
        {% end %}
+       {% if nowpage != page_count[-1] %}
+         <a href="/program?page={{nowpage+1}}">&gt;</a><a href="/program?page={{page_count[-1]}}">&gt;&gt;</a></div>
        {% end %}
-   {% if nowpage != page_count[-1] %}
-      <a href="/program?page={{nowpage+1}}">&gt;</a><a href="/program?page={{page_count[-1]}}">&gt;&gt;</a></div>
-   {% end %}
    {% else %}
         {% for i in page_count[:] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/program?page={{i}}">{{i}}</a>
-       {% end %}
+           {% if i==nowpage %}
+             <b>{{i}}</b>
+           {% else %}
+           <a href="/program?page={{i}}">{{i}}</a>
+           {% end %}
        {% end %}
    {% if nowpage != page_count[-1] %}
       <a href="/program?page={{nowpage+1}}">&gt;</a><a href="/program?page={{page_count[-1]}}">&gt;&gt;</a></div>
@@ -78,9 +78,9 @@
   </article>
   <aside>
     <div class="rnav">
-      <li class="rnav1 "><a href="/">python</a></li>
-      <li class="rnav2 "><a href="/">javascrip</a></li>
-      <li class="rnav3 "><a href="/">security</a></li>
+      <li class="rnav1 "><a href="/search?key=python">python</a></li>
+      <li class="rnav2 "><a href="/search?key=javascript">javascript</a></li>
+      <li class="rnav3 "><a href="/search?key=security">security</a></li>
       <li class="rnav4 "><a href="https://github.com/Hackerl">github</a></li>
     </div>
     <div class="ph_news">
@@ -89,10 +89,10 @@
       </h2>
       <ul class="ph_n">
         {% for i in range(hottotal) %}
-            {% if i<4%}
+            {% if i<3%}
             <li><span class="num1">{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
             {% end %}
-            {% if i<9 and i>3%}
+            {% if i<9 and i>2%}
             <li><span>{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
         {% end %}
         {% end %}
@@ -136,7 +136,7 @@
           <dt><img src="static/images/s6.jpg"> </dt>
           <dt> </dt>
           <dd>小林博客
-            <time>8月7日</time>
+            <time>8小时前</time>
           </dd>
           <dd><a href="/">博客色彩丰富，很是好看</a></dd>
         </dl>
@@ -144,7 +144,7 @@
           <dt><img src="static/images/003.jpg"> </dt>
           <dt> </dt>
           <dd>DanceSmile
-            <time>49分钟前</time>
+            <time>昨天</time>
           </dd>
           <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
         </dl>
@@ -152,7 +152,7 @@
           <dt><img src="static/images/002.jpg"> </dt>
           <dt> </dt>
           <dd>yisa
-            <time>2小时前</time>
+            <time>前天</time>
           </dd>
           <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
         </dl>

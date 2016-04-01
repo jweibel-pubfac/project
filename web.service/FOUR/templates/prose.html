@@ -24,7 +24,9 @@
     <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a id="topnav_current" href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
   </header>
   <article>
-    <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="1/">坐忘峰</a></h2>
+    <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/prose">坐忘峰</a></h2>
+
+
     <div class="bloglist">
       {% for article in articles %}
       <div class="newblog">
@@ -34,13 +36,15 @@
     {% for label in article.labels %}
     [<a href="/search?key={{ escape(label.detail) }}">{{ escape(label.detail) }}</a>]    
     {% end %}
-</span><span>浏览（<a href="/">{{article.visit}}</a>）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></div>
+</span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></div>
           <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
         </ul>
         <figure><img src="static/article/{{article.title}}"></figure>
         <div class="dateview">{{article.time.date()}}</div>
       </div>
 {% end %}
+
+
     <div class="page"><a title="Total record"><b>{{total}}</b></a>
     {% for i in page_count[nowpage-4:nowpage+4] %}
        {% if i==nowpage %}
@@ -55,12 +59,14 @@
    {% end %}
 {% end %}
   </article>
+
+
   <aside>
     <div class="rnav">
-      <li class="rnav1 "><a href="/">随笔一二</a></li>
-      <li class="rnav2 "><a href="/">诗和远方</a></li>
-      <li class="rnav3 "><a href="/">闲庭漫步</a></li>
-      <li class="rnav4 "><a href="/">程序人生</a></li>
+      <li class="rnav1 "><a href="/search?key=随笔">随笔一二</a></li>
+      <li class="rnav2 "><a href="/search?key=诗词">诗和远方</a></li>
+      <li class="rnav3 "><a href="/search?key=流浪">闲庭漫步</a></li>
+      <li class="rnav4 "><a href="/search?key=思考">程序人生</a></li>
     </div>
     <div class="ph_news">
       <h2>
@@ -68,10 +74,10 @@
       </h2>
       <ul class="ph_n">
         {% for i in range(hottotal) %}
-            {% if i<4%}
+            {% if i<3%}
             <li><span class="num1">{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
             {% end %}
-            {% if i<9 and i>3%}
+            {% if i<9 and i>2%}
             <li><span>{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
         {% end %}
         {% end %}
@@ -112,7 +118,7 @@
           <dt><img src="static/images/s6.jpg"> </dt>
           <dt> </dt>
           <dd>小林博客
-            <time>8月7日</time>
+            <time>8小时前</time>
           </dd>
           <dd><a href="/">博客色彩丰富，很是好看</a></dd>
         </dl>
@@ -120,7 +126,7 @@
           <dt><img src="static/images/003.jpg"> </dt>
           <dt> </dt>
           <dd>DanceSmile
-            <time>49分钟前</time>
+            <time>昨天</time>
           </dd>
           <dd><a href="/">文章非常详细，我很喜欢.前端的工程师很少，我记得几年前yahoo花高薪招聘前端也招不到</a></dd>
         </dl>
@@ -128,7 +134,7 @@
           <dt><img src="static/images/002.jpg"> </dt>
           <dt> </dt>
           <dd>yisa
-            <time>2小时前</time>
+            <time>前天</time>
           </dd>
           <dd><a href="/">我手机里面也有这样一个号码存在</a></dd>
         </dl>

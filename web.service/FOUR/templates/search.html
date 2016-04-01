@@ -2,26 +2,30 @@
 {% block page %}
     <div class="page"><a title="Total record"><b>{{total}}</b></a>
     {% if len(page_count)>8 %}
-    {% for i in page_count[nowpage-4:nowpage+4] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/search?key={{key}}&page={{i}}">{{i}}</a>
-       {% end %}
-{% end %}
+         {% for i in page_count[nowpage-4:nowpage+4] %}
+             {% if i==nowpage %}
+                 <b>{{i}}</b>
+             {% else %}
+                 <a href="/search?key={{key}}&page={{i}}">{{i}}</a>
+             {% end %}
+         {% end %}
+             {% if page_count!=[] %}
+             {% if nowpage != page_count[-1]%}
+              <a href="/search?key={{key}}&page={{nowpage+1}}">&gt;</a><a href="/search?key={{key}}&page={{page_count[-1]}}">&gt;&gt;</a></div>
+             {% end %}
+             {% end %}
+   {% else %}
+         {% for i in page_count[:] %}
+              {% if i==nowpage %}
+                    <b>{{i}}</b>
+              {% else %}
+                      <a href="/search?key={{key}}&page={{i}}">{{i}}</a>
+              {% end %}
+    {% end %}
+   {% if page_count!=[] %}
    {% if nowpage != page_count[-1] %}
       <a href="/search?key={{key}}&page={{nowpage+1}}">&gt;</a><a href="/search?key={{key}}&page={{page_count[-1]}}">&gt;&gt;</a></div>
    {% end %}
-   {% else %}
-        {% for i in page_count[:] %}
-       {% if i==nowpage %}
-         <b>{{i}}</b>
-       {% else %}
-       <a href="/search?key={{key}}&page={{i}}">{{i}}</a>
-       {% end %}
-{% end %}
-   {% if nowpage != page_count[-1] %}
-      <a href="/search?key={{key}}&page={{nowpage+1}}">&gt;</a><a href="/search?key={{key}}&page={{page_count[-1]}}">&gt;&gt;</a></div>
    {% end %}
 {% end %}
 

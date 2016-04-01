@@ -8,6 +8,7 @@ import os
 class Article(object):
     @classmethod
     def all(cls, db,sort=None):
+    #去除全部文章，可加入分类参数
         if sort:
             hot=db.query("SELECT * FROM article where sort=%s ORDER BY visit DESC ",sort)
             articles = db.query("SELECT * FROM article where sort=%s ORDER BY time DESC",sort)
@@ -23,6 +24,7 @@ class Article(object):
 
     @classmethod
     def get(cls, db, id):
+        #获得一篇文章，包括相关，上下页
         db.execute("UPDATE article set visit=visit+1 WHERE id=%s",id)
         article = db.get('SELECT * FROM article WHERE id = %s', id)
         try:
@@ -65,6 +67,7 @@ class Article(object):
         db.execute('DELETE FROM label WHERE article_id=%s'%id)
     @classmethod
     def new(cls, db):
+        #强迫症患者福音，自动排列数据库id，保证永远从1开始不间断
         sum = 0
         articles=db.query("SELECT * FROM article")
         for article in articles:
@@ -82,7 +85,7 @@ class Article(object):
 
        
 
-
+#标签查询
 class Label(object):
     @classmethod
     def all(cls, db, article_id):
@@ -102,7 +105,7 @@ class Label(object):
         return db.query('SELECT detail, count(*) AS number \
                 FROM label GROUP BY detail ORDER BY number DESC')
 
-
+#管理员验证
 class Auth(object):
     @classmethod
     def authenticate(cls, db, username, password):
@@ -110,7 +113,7 @@ class Auth(object):
                 WHERE username = %s', username)['password']
         return hashlib.md5(password).hexdigest() == hashPassword
 
-
+#标签搜索
 class Search(object):
     @classmethod
     def all(cls, db, key):

@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 #-*- coding:utf-8 -*-
+#该模块负责处理浏览器请求
+#数据库查询在model模块中，文章分页在component模块中
+#先调用install.py，初始化数据库，以及设置管理员用户名、密码等
 import torndb
 import tornado.httpserver
 import tornado.web
@@ -8,12 +11,15 @@ import os.path
 import markdown
 import ConfigParser
 import re
-from duoshuo import DuoshuoAPI
+
 from model import Article, Label, Auth, Search
 from component import Paginator
 from tornado.options import define, options
-oldimage=''
-api = DuoshuoAPI(short_name='hackerl', secret='Liukong052997')
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
+
+
 
 class Application(tornado.web.Application):
     def __init__(self):
@@ -91,13 +97,13 @@ class ProseHandler(BaseHandler):
         nowpage = int(self.get_argument('page', '1'))
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
-        label_list = Label.group(self.db)
-        self.render('prose.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal)
+        self.render('prose.html',articles=page.object_list,isAdmin=isAdmin,total=total,
+                     page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal)
 class ProgramHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
         articles,hot=Article.all(self.db,'program')
+        #动态为三个sort分页 -------------------------------
         python=[[]]
         js=[[]]
         security=[[]]
@@ -133,6 +139,7 @@ class ProgramHandler(BaseHandler):
             searticle=security[-1]
         else:
             searticle=security[nowpage-1]
+        #动态为三个sort分页 -------------------------------
         p = Paginator(articles,8)
         total=p.count
         hottotal=len(hot)
@@ -143,10 +150,8 @@ class ProgramHandler(BaseHandler):
             now=nowpage
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
-        label_list = Label.group(self.db)
-        self.render('program.html',label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count\
-             ,nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle)
+        self.render('program.html',isAdmin=isAdmin,total=total,page_count=page_count,
+                     nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle)
 class HomeHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
@@ -157,23 +162,23 @@ class HomeHandler(BaseHandler):
         page_count=p.page_range
         hottotal=len(hot)
         isAdmin = self.isAdmin()
+        #如果想加入标签列表，可在模板中加入label_list
         label_list = Label.group(self.db)
         self.render('index.html', articles=page.object_list, label_list=label_list,
                 isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,new=articles)
-
 
 class ArticleHandler(BaseHandler):
     def get(self, id):
         other,hot=Article.all(self.db)
         hottotal=len(hot)
         article,up,dn,relevant = Article.get(self.db, id)
+        #包括上下页，和相关文章
         if article is None:
             error = '404: Page Not Found'
             self.render('error.html', error=error, home_title=options.home_title)
         else:
             isAdmin = self.isAdmin()
-            label_list = Label.group(self.db)
-            self.render('article.html', article=article, label_list=label_list, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hot,hottotal=hottotal)
+            self.render('article.html', article=article, isAdmin=isAdmin,up=up,dn=dn,relevants=relevant,hots=hot,hottotal=hottotal)
 
 
 class PreviewHandler(BaseHandler):
@@ -185,6 +190,7 @@ class PreviewHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
+        #如果上传了封面-----------------------------------------------
         try:
             file_metas = self.request.files["image"]
             for meta in file_metas:
@@ -196,6 +202,7 @@ class PreviewHandler(BaseHandler):
                         up.write(meta['body'])
         except:
             pass
+        #如果上传了封面-----------------------------------------------
         article = {}
         article['sort']=sort
         article['title'] = title
@@ -211,13 +218,14 @@ class PreviewHandler(BaseHandler):
         self.render('preview.html', article=article, data=data,
                 user=options.user, photo=options.photo)
 
-
+#删除文章，需要权限验证
 class DeleteHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self,id):
          Article.delete(self.db, id)
          Article.new(self.db)
          self.redirect('/')
+
 class EditArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
@@ -227,25 +235,25 @@ class EditArticleHandler(BaseHandler):
             self.render('error.html', error=error, home_title=options.home_title)
         else:
             labels = ' '.join(map(lambda item: '[' + item['detail'] + ']', article['labels']))
-            global oldimage
-            oldimage=article.title
+            options.oldimage=str(article.title)
+            #尝试更改封面，先保存旧名称
             self.render('editArticle.html', article=article, labels=labels)
 
 
 class UpdateArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, id):
-        global oldimage
         title = self.get_argument('title')
         content_md = self.get_argument('content')
         sort = self.get_argument('sort')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = markdown.markdown(content_md, ['codehilite'])
+        #更新封面-----------------------------------------------------------------
         try:
             file_metas = self.request.files["image"]
-            if os.path.isfile(os.path.join('static/article',oldimage)):
-                os.remove(os.path.join('static/article', oldimage))
+            if os.path.isfile(os.path.join('static/article',options.oldimage)):
+                os.remove(os.path.join('static/article', options.oldimage))
             for meta in file_metas:
                 filename = title
                 filepath = os.path.join('static/article', title)
@@ -255,11 +263,12 @@ class UpdateArticleHandler(BaseHandler):
                         up.write(meta['body'])
 
         except:
-            if title==oldimage:
+            if str(title)==options.oldimage:
                 pass
             else:
-                if os.path.isfile(os.path.join('static/article',oldimage)):
-                    os.rename(os.path.join('static/article',oldimage), os.path.join('static/article',title))
+                if os.path.isfile(os.path.join('static/article',options.oldimage)):
+                    os.rename(os.path.join('static/article',options.oldimage), os.path.join('static/article',title))
+        #更新封面-----------------------------------------------------------------
         try:
             Article.update(self.db, id, title, content_md, content_html,sort)
             Label.deleteAll(self.db, id)
@@ -272,7 +281,7 @@ class UpdateArticleHandler(BaseHandler):
             error = "The post data invalid"
             self.render('error.html', error=error, home_title=options.home_title)
 
-
+#创建文章
 class CreateArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
@@ -299,7 +308,7 @@ class CreateArticleHandler(BaseHandler):
             error = "The post data invalid"
             self.render('error.html', error=error, home_title=options.home_title)
 
-
+#按照标签搜索
 class SearchHandler(BaseHandler):
     def get(self):
         key = self.get_argument('key', '').strip()
@@ -320,7 +329,8 @@ class SearchHandler(BaseHandler):
         label_list = Label.group(self.db)
 
         self.render('search.html', articles=page.object_list, label_list=label_list,
-                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,hottotal=hottotal,key=key,new=results)
+                isAdmin=isAdmin,total=total,page_count=page_count,nowpage=nowpage,hots=hot,
+                                                      hottotal=hottotal,key=key,new=results)
 
 class LoginHandler(BaseHandler):
     def get(self):
@@ -333,7 +343,7 @@ class LogoutHandler(BaseHandler):
         self.clear_cookie('user')
         self.redirect('/', permanent=True)
 
-
+#管理员验证--------------------------------------------------------------------------
 class AuthHandler(BaseHandler):
     def post(self):
         username = self.get_argument("username")
@@ -356,7 +366,7 @@ class AuthHandler(BaseHandler):
     def validate(self, username):
         regex = re.compile(r'^[\w\d]+$')
         return regex.match(username)
-
+#管理员验证--------------------------------------------------------------------------
 
 def main():
     config = ConfigParser.ConfigParser()
@@ -373,6 +383,7 @@ def main():
     define("user", default=blog['user'])
     define("home_title", default=blog['home_title'])
     define("photo", default=blog['photo'])
+    define("oldimage", default='')
 
     http_server = tornado.httpserver.HTTPServer(Application())
     http_server.listen(options.port)

@@ -17,81 +17,75 @@
   <header>
     <h1>如影随形</h1>
     <h2>影子是一个会撒谎的精灵，它在虚空中流浪和等待被发现之间;在存在与不存在之间....</h2>
+
+
     <div class="logo"><a href="/"></a></div>
     {% if article.sort == 'program' %}
-    <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program" id="topnav_current">试剑亭</a><a href="/music">绿竹巷</a></nav>
-  </header>
-  <article>
-  <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/music">试剑亭</a></h2>
+           <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program" id="topnav_current">试剑亭</a><a href="/music">绿竹巷</a></nav>
+            </header>
+            <article>
+            <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/program">试剑亭</a></h2>
 
     {% elif article.sort == 'prose' %}
-    <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose" id="topnav_current">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
+              <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose" id="topnav_current">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
 
-  </header>
-  <article>
-  <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/music">坐忘峰</a></h2>
+             </header>
+             <article>
+             <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/prose">坐忘峰</a></h2>
 
     {% elif article.sort == 'music' %}
-    <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music" id="topnav_current">绿竹巷</a></nav>
+             <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music" id="topnav_current">绿竹巷</a></nav>
 
-  </header>
-  <article>
-  <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/music">绿竹巷</a></h2>
+           </header>
+           <article>
+           <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/music">绿竹巷</a></h2>
 
     {% else %}
-    <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
-
-  </header>
-  <article>
-  <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/music">天涯海角</a></h2>
+             <nav id="topnav"><a href="/">江湖</a><a href="/about">剑冢</a><a href="/prose">坐忘峰</a><a href="/program">试剑亭</a><a href="/music">绿竹巷</a></nav>
+           </header>
+           <article>
+           <h2 class="about_h">您现在的位置是：<a href="/">江湖</a>&gt;<a href="/">天涯海角</a></h2>
     {% end %}
+
+
 
     {% block articles %}
     <div class="index_about">
       <h2 class="c_titile">{{ escape(article.title) }}</h2>
       <p class="box_c"><span class="d_time">发布时间：{{ article.time}}</span><span>编辑：刘小盼</span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></p>
-        {% if isAdmin %}
-        <small><a href="/createArticle">[新建]</a></small>
-        <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
-        <small><a href="/article/delete/{{ article.id }}">[删除]</a></small>
-        {% end %}
-      <ul class="infos">
+          {% if isAdmin %}
+                <small><a href="/createArticle">[新建]</a></small>
+                 <small><a href="/article/edit/{{ article.id }}">[编辑]</a></small>
+                <small><a href="/article/delete/{{ article.id }}">[删除]</a></small>
+          {% end %}
+       <ul class="infos">
        <div class="content_html">{{ article.content_html }}</div>
       </ul>
       <div class="keybq">
-        <p><span>关键字词</span>：    
+        <p><span>标签</span>：    
     {% for label in article.labels %}
-    <a href="/search?key={{ escape(label.detail) }}" class="label label-info">{{ escape(label.detail) }}</a>
+          <a href="/search?key={{ escape(label.detail) }}" class="label label-info">{{ escape(label.detail) }}</a>
     {% end %}
-    </p>
+      </p>
+
    {% end %}
       </div>
+
     {% block near %}
-      <div class="nextinfo">
+            <div class="nextinfo">
         {% if up %}
-        <p>上一篇：<a href="{{up.id}}">{{up.title}}</a></p>
+              <p>上一篇：<a href="{{up.id}}">{{up.title}}</a></p>
         {% end %}
         {% if dn %}
-        <p>下一篇：<a href="{{dn.id}}">{{dn.title}}</a></p>
+              <p>下一篇：<a href="{{dn.id}}">{{dn.title}}</a></p>
         {% end %}
       </div>
-     {%end%}
+   {%end%}
+
 <!-- 多说评论框 start -->
 	<div class="ds-thread" data-thread-key={{ article.id }} data-title={{ article.title }} data-url="article/{{ article.id }}"></div>
 <!-- 多说评论框 end -->
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"hackerl"};
-	(function() {
-		var ds = document.createElement('script');
-		ds.type = 'text/javascript';ds.async = true;
-		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-		ds.charset = 'UTF-8';
-		(document.getElementsByTagName('head')[0] 
-		 || document.getElementsByTagName('body')[0]).appendChild(ds);
-	})();
-	</script>
-<!-- 多说公共JS代码 end -->
+
 
 
      {% block relevant %}
@@ -111,10 +105,10 @@ var duoshuoQuery = {short_name:"hackerl"};
   </article>
   <aside>
     <div class="rnav">
-      <li class="rnav1 "><a href="/">钢琴</a></li>
-      <li class="rnav2 "><a href="/">吉他</a></li>
-      <li class="rnav3 "><a href="/">民谣</a></li>
-      <li class="rnav4 "><a href="/">摇滚</a></li>
+      <li class="rnav1 "><a href="/about">about</a></li>
+      <li class="rnav2 "><a href="/prose">prose</a></li>
+      <li class="rnav3 "><a href="/program">program</a></li>
+      <li class="rnav4 "><a href="/music">music</a></li>
     </div>
     <div class="ph_news">
       <h2>
@@ -122,10 +116,10 @@ var duoshuoQuery = {short_name:"hackerl"};
       </h2>
       <ul class="ph_n">
         {% for i in range(hottotal) %}
-            {% if i<4%}
+            {% if i<3%}
             <li><span class="num1">{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
             {% end %}
-            {% if i<9 and i>3%}
+            {% if i<9 and i>2%}
             <li><span>{{i+1}}</span><a href="/article/{{hots[i].id}}">{{hots[i].title}}</a></li>
         {% end %}
         {% end %}
@@ -135,15 +129,15 @@ var duoshuoQuery = {short_name:"hackerl"};
       </h2>
 <div class="tj_news">
       <ul>
-        <li><a href="http://www.freebuf.com/tools/48016.html">SSL中间人</a></li>
-        <li><a href="http://www.freebuf.com/articles/wireless/69840.html">WIFI钓鱼</a></li>
-        <li><a href="https://www.91ri.org/7170.html">社会工程学(SET)</a></li>
-        <li><a href="http://www.runoob.com/python/python-xml.html">python xml解析</a></li>
-        <li><a href="http://blog.just4fun.site/pyspider-demo.html">pyspider</a></li>
-        <li><a href="https://www.91ri.org/15204.html">WIFI绵羊墙</a></li>
-        <li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html">字符编码</a></li>
-        <li><a href="http://evilcos.me/">EVILCOS黑客那种邪气</a></li>
-        <li><a href="http://www.s0nnet.com/archives/mitmf">MITMF内网劫持新姿态</a></li>
+        <li><a href="http://www.freebuf.com/tools/48016.html" target="_blank">SSL中间人</a></li>
+        <li><a href="http://www.freebuf.com/articles/wireless/69840.html" target="_blank">WIFI钓鱼</a></li>
+        <li><a href="https://www.91ri.org/7170.html" target="_blank">社会工程学(SET)</a></li>
+        <li><a href="http://www.runoob.com/python/python-xml.html" target="_blank">python xml解析</a></li>
+        <li><a href="http://blog.just4fun.site/pyspider-demo.html" target="_blank">pyspider</a></li>
+        <li><a href="https://www.91ri.org/15204.html" target="_blank">WIFI绵羊墙</a></li>
+        <li><a href="http://www.ruanyifeng.com/blog/2007/10/ascii_unicode_and_utf-8.html" target="_blank">字符编码</a></li>
+        <li><a href="http://evilcos.me/" target="_blank">EVILCOS黑客那种邪气</a></li>
+        <li><a href="http://www.s0nnet.com/archives/mitmf" target="_blank">MITMF内网劫持新姿态</a></li>
       </ul>
 </div>
       <h2>
@@ -160,6 +154,19 @@ var duoshuoQuery = {short_name:"hackerl"};
     </div>
   </aside>
 <script src="{{static_url("js/modernizr.js")}}"></script>
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"hackerl"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+<!-- 多说公共JS代码 end -->
   <div class="clear"></div>
   <!-- 清除浮动 --> 
 </div>
