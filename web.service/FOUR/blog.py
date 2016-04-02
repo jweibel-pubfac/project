@@ -191,7 +191,8 @@ class PreviewHandler(BaseHandler):
         content_md = self.get_argument('content')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
-        content_html = markdown.markdown(content_md, ['codehilite'])
+        content_html = str(markdown.markdown(content_md, ['codehilite']))
+
         #如果上传了封面-----------------------------------------------
         try:
             file_metas = self.request.files["image"]
@@ -250,7 +251,7 @@ class UpdateArticleHandler(BaseHandler):
         sort = self.get_argument('sort')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
-        content_html = markdown.markdown(content_md, ['codehilite'])
+        content_html = str(markdown.markdown(content_md, ['codehilite']))
         #更新封面-----------------------------------------------------------------
         try:
             file_metas = self.request.files["image"]
@@ -272,7 +273,7 @@ class UpdateArticleHandler(BaseHandler):
                     os.rename(os.path.join('static/article',options.oldimage), os.path.join('static/article',title))
         #更新封面-----------------------------------------------------------------
         try:
-            Article.update(self.db, id, title, content_md, content_html,sort)
+            Article.update(self.db, id, title, content_md.replace('\"','\''), content_html.replace('\"','\''),sort)
             Label.deleteAll(self.db, id)
             for label in labels:
                 detail = label[1:-1].strip()
@@ -297,9 +298,8 @@ class CreateArticleHandler(BaseHandler):
 
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
-        content_html = markdown.markdown(content_md, ['codehilite'])
-        
-        article_id = Article.create(self.db, title, content_md, content_html,sort)   
+        content_html = str(markdown.markdown(content_md, ['codehilite']))
+        article_id = Article.create(self.db, title, content_md.replace('\"','\''), content_html.replace('\"','\''),sort)   
         for label in labels:
             detail = label[1:-1].strip()
             Label.create(self.db, article_id, detail)
