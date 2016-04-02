@@ -8,6 +8,8 @@
 <link href="{{static_url("css/base.css")}}" rel="stylesheet">
 <link href="{{static_url("css/index.css")}}" rel="stylesheet">
 <link href="{{static_url("css/media.css")}}" rel="stylesheet">
+<link rel="stylesheet" href="{{static_url("css/share.css")}}">
+
 
 <link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_popup.css?v=240f357d.css">
 <link rel="stylesheet" href="http://bdimg.share.baidu.com/static/api/css/share_style1_32.css">
@@ -40,7 +42,7 @@
         <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
         <figure><img src="static/article/{{ article.title }}"></figure>
         <ul>
-          <div class="content_html">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{ article.content_md[0:120] }}.....
+          <div class="content_html">{{ article.content_md[0:120] }}.....
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
         <p class="autor"><span>作者：刘小盼</span><span>分类：<a href="/{{ article.sort }}">{{ article.sort }}</a></span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span><span>
@@ -99,7 +101,13 @@
       <p>电话：13870675448</p>
       <p>邮箱：490021209@qq.com</p>
     </div>
-    <div class="bdsharebuttonbox bdshare-button-style1-32" data-bd-bind="1459145422299"><a title="分享到QQ空间" data-cmd="qzone" class="bds_qzone" href="http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=www.hackerl.com"></a><a title="分享到新浪微博" data-cmd="tsina" class="bds_tsina" href="http://service.weibo.com/share/share.php?url=www.hackerl.com%&appkey=&title=&pic=&ralateUid=&language="></a><a title="分享到腾讯微博" data-cmd="tqq" class="bds_tqq" href="http://share.v.t.qq.com/index.php?c=share&a=index&url=www.hackerl.com"></a><a title="分享到人人网" data-cmd="renren" class="bds_renren" href="http://widget.renren.com/dialog/share?url=http://www.hackerl.com"></a><a title="分享到微信" data-cmd="weixin" class="bds_weixin" href="#"></a><a data-cmd="more" class="bds_more" href="#"></a></div>
+	    <div class="sns-share">&nbsp&nbsp&nbsp
+	    <a href="" class="qzone"><i class="icon iconfont icon-qzone"></i></a>
+	    <a href="" class="qq"><i class="icon iconfont icon-qq"></i></a>
+	    <a href="" class="weibo"><i class="icon iconfont icon-weibo"></i></a>
+	    <a href="" class="wechat"><i class="icon iconfont icon-wechat"></i></a>
+	    <a href="" class="douban"><i class="icon iconfont icon-douban"></i></a>
+	</div><br>
     <div class="tj_news">
       <h2>
         <p class="tj_t1">最新文章</p>
@@ -143,6 +151,27 @@
     </div>
   </aside>
   <script src="{{static_url("js/modernizr.js")}}"></script>
+  <script src="{{static_url("js/share.js")}}"></script>
+<!-- 引入sns.js -->
+<script src="http://apps.bdimg.com/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/jquery/1.11.2/jquery.min.js"></script>
+<script src="{{static_url("js/jquery.qrcode.min.js")}}"></script>
+<script src="{{static_url("js/share.js")}}"></script>
+<!-- <script src="jquery.qrcode.min.js"></script> -->
+<script>
+    $(function(){
+        var $config = {
+		    url    : 'http://www.hackerl.com', // 网址，默认使用 window.location.href
+		    site   : '', // 来源（QQ空间会用到）, 默认读取head标签：<meta name="site" content="http://overtrue" />
+		    title  : 'Hackerl | 江湖风轻', // 标题，默认读取 document.title
+		    description : '刘小盼·博客', // 描述, 默认读取head标签：<meta name="description" content="PHP弱类型的实现原理分析" />
+		    iamge    : 'http://bbs.xiaoniu.com/data/attachment/image/paipai/7a51976182_flow.jpg', // 图片, 默认取网页中第一个img标签
+		    target : '_blank' //打开方式
+		   };
+
+		$('.sns-share').share($config);
+    });
+</script>
 <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 <script type="text/javascript">
 var duoshuoQuery = {short_name:"hackerl"};

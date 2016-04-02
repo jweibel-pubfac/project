@@ -37,11 +37,12 @@
     [<a href="/search?key={{ escape(label.detail) }}">{{ escape(label.detail) }}</a>]    
     {% end %}
 </span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span></div>
-          <p>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{  article.content_md[0:95]  }}..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
+        <p >{{  article.content_md[:98] }} ..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
+
         </ul>
         <figure><img src="static/article/{{article.title}}"></figure>
         <div class="dateview">{{article.time.date()}}</div>
-      </div>
+    </div>
 {% end %}
 
 

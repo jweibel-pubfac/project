@@ -93,8 +93,10 @@
         <h2>相关文章</h2>
         <ul>
           {% if relevants %}
-          {% for relevant in relevants %}
-          <li><a title="{{relevant.title}}" href="{{relevant.id}}">{{relevant.title}}</a></li>
+          {% for i in range(len(relevants)) %}
+          {% if i<6 %}
+          <li><a title="{{relevants[i].title}}" href="{{relevants[i].id}}">{{relevants[i].title}}</a></li>
+          {% end %}
           {% end %}
           {% end %}
         </ul>
