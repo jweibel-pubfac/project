@@ -299,7 +299,10 @@ class CreateArticleHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = str(markdown.markdown(content_md, ['codehilite']))
-        article_id = Article.create(self.db, title, content_md.replace('\"','\''), content_html.replace('\"','\''),sort)   
+        strinfo = re.compile('%')
+        new_html = strinfo.sub('%%',content_html)
+        new_md = strinfo.sub('%%',content_md)
+        article_id = Article.create(self.db, title, new_md.replace('\"','\''), new_html.replace('\"','\''),sort)   
         for label in labels:
             detail = label[1:-1].strip()
             Label.create(self.db, article_id, detail)

@@ -48,7 +48,7 @@ class Article(object):
     @classmethod
     def create(cls, db, title, content_md, content_html,sort):
         return db.execute('insert into article (title, content_md,content_html,sort,time) \
-               values("%s", "%s", "%s","%s",CURRENT_TIMESTAMP())'%(title, content_md,content_html,sort))
+               values("%s", "%s", "%s","%s",CURRENT_TIMESTAMP())'%(title, content_md, content_html,sort))
     @classmethod
     def update(cls, db, id, title, content_md, content_html,sort):
         db.execute("UPDATE article set title=%s, content_md=%s, \
