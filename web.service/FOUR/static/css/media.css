@@ -59,9 +59,9 @@ q:before,q:after,blockquote:before,blockquote:after{content:""}
 
 .content_html a{color:#4A89DC;text-decoration:none;}  
 .content_html a:hover{color:#4A89DC;text-decoration:underline;}
-.content_html h1{color:#656D78;font-size:36px;line-height:40px}
-.content_html h2{color:#FFCE54;font-size:30px;line-height:40px}
-.content_html h3{color:	#20b2aa;font-size:24px;line-height:40px}
+.content_html h1{color:#656D78;font-size:30px;line-height:40px}
+.content_html h2{color:#FFCE54;font-size:24px;line-height:40px}
+.content_html h3{color:	#20b2aa;font-size:20px;line-height:40px}
 .content_html h4{color:#FC6E51;font-size:18px;line-height:20px}
 .content_html h5{color:#EC87C0;font-size:14px;line-height:20px}
 .content_html h6{color:#ED5565;font-size:12px;line-height:20px}
