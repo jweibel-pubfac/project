@@ -46,13 +46,13 @@ class Article(object):
             return article,up,dn,relevant
 
     @classmethod
-    def create(cls, db, title, content_md, content_html,sort):
-        return db.execute('insert into article (title, content_md,content_html,sort,time) \
-               values("%s", "%s", "%s","%s",CURRENT_TIMESTAMP())'%(title, content_md, content_html,sort))
+    def create(cls, db, title, content_md, content_html,sort,image):
+        return db.execute('insert into article (title, content_md,content_html,sort,image,time) \
+               values("%s", "%s", "%s","%s","%s",CURRENT_TIMESTAMP())'%(title, content_md, content_html,sort,image))
     @classmethod
-    def update(cls, db, id, title, content_md, content_html,sort):
+    def update(cls, db, id, title, content_md, content_html,sort,image):
         db.execute("UPDATE article set title=%s, content_md=%s, \
-                content_html=%s,sort=%s WHERE id=%s",title, content_md, content_html,sort,id)
+                content_html=%s,sort=%s,image=%s WHERE id=%s",title, content_md, content_html,sort,image,id)
 
     @classmethod
     def totalNumber(cls, db):

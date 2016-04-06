@@ -10,7 +10,7 @@ Edit an Article
         <legend>编辑文章</legend>
         {% module xsrf_form_html() %}
         <label for="article-image">封面</label>
-        <input type="file" id="article-image" name="image"/><br><br>
+        <input type="text" id="article-image" name="image" value="{{ escape(article.image) }}"/>
         <label for="article-sort">分类</label>
         <input type="text" id="article-sort" name="sort" value="{{ escape(article.sort) }}"/>
         <label for="article-title">标题</label>

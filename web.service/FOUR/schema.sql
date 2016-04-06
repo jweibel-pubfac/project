@@ -12,7 +12,9 @@ CREATE TABLE article (
     content_html MEDIUMTEXT NOT NULL, 
     time DATETIME NOT NULL,
     sort text not null,
-    visit int(9) Default 0
+    visit int(9) Default 0,
+    image text
+    
 );
 
 CREATE TABLE label (

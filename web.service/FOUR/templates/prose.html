@@ -40,7 +40,7 @@
         <p >{{  article.content_md[:98] }} ..... <a class="readmore" target="_blank" href="/article/{{article.id}}">全文</a></p>
 
         </ul>
-        <figure><img src="static/article/{{article.title}}"></figure>
+        <figure><img src="{{article.image}}"></figure>
         <div class="dateview">{{article.time.date()}}</div>
     </div>
 {% end %}

@@ -31,7 +31,7 @@
         <a class="more" href="/search?key=python">更多&gt;&gt;</a> </h3>
       <ul>
    {%for article in python%}
-         <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+         <li><a href="/article/{{article.id}}"><img src="{{article.image}}"></a><span>{{ article.title }}</span></li>
    {% end %}
       </ul>
       <h3>
@@ -39,7 +39,7 @@
         <a class="more" href="/search?key=javascript">更多&gt;&gt;</a> </h3>
       <ul>
    {%for article in js%}
-        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+        <li><a href="/article/{{article.id}}"><img src="{{article.image}}"></a><span>{{ article.title }}</span></li>
    {% end %}
       </ul>
       <h3>
@@ -47,7 +47,7 @@
         <a class="more" href="/search?key=security">更多&gt;&gt;</a> </h3>
       <ul>
    {%for article in security%}
-        <li><a href="/article/{{article.id}}"><img src="static/article/{{article.title}}"></a><span>{{ article.title }}</span></li>
+        <li><a href="/article/{{article.id}}"><img src="{{article.image}}"></a><span>{{ article.title }}</span></li>
    {% end %}
       </ul>
     </div>

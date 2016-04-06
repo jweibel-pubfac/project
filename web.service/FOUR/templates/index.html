@@ -40,9 +40,9 @@
       {% for article in articles %}
       <div class="blogs">
         <h3><a href="/article/{{ article.id }}">{{ article.title }}</a></h3>
-        <figure><img src="static/article/{{ article.title }}"></figure>
+        <figure><img src="{{ article.image }}"></figure>
         <ul>
-          <div class="content_html">{{ article.content_md[0:120] }}.....
+          {{ article.content_md[0:120] }}.....      
           <a class="readmore" target="_blank" href="/article/{{ article.id }}">阅读全文&gt;&gt;</a>
         </ul>
         <p class="autor"><span>作者：刘小盼</span><span>分类：<a href="/{{ article.sort }}">{{ article.sort }}</a></span><span>浏览（{{article.visit}}）</span><span class="ds-thread-count" data-thread-key={{ article.id }}></span><span>
@@ -53,7 +53,7 @@
         {% end %}
       </span></p>
         <div class="dateview">{{ article.time.date() }}</div>
-      </div>
+       </div>
       {% end %}
     </div>
 {% block page %}
@@ -101,7 +101,7 @@
       <p>电话：13870675448</p>
       <p>邮箱：490021209@qq.com</p>
     </div>
-	    <div class="sns-share">&nbsp&nbsp&nbsp
+	    <div class="sns-share">&nbsp
 	    <a href="" class="qzone"><i class="icon iconfont icon-qzone"></i></a>
 	    <a href="" class="qq"><i class="icon iconfont icon-qq"></i></a>
 	    <a href="" class="weibo"><i class="icon iconfont icon-weibo"></i></a>

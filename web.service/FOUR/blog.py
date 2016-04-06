@@ -192,27 +192,16 @@ class PreviewHandler(BaseHandler):
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = str(markdown.markdown(content_md, ['codehilite']))
-
-        #如果上传了封面-----------------------------------------------
-        try:
-            file_metas = self.request.files["image"]
-            for meta in file_metas:
-                filename = title
-                filepath = os.path.join('static/article', title)
-                if not os.path.isfile(filepath):
-                # 有些文件需要已二进制的形式存储，实际中可以更改
-                    with open(filepath, 'wb') as up:
-                        up.write(meta['body'])
-        except:
-            pass
-        #如果上传了封面-----------------------------------------------
+        image=self.get_argument('image')
         article = {}
+        article['image']=image
         article['sort']=sort
         article['title'] = title
         article['content_html'] = content_html
         article['labels'] = [{'detail': label[1:-1].strip()} for label in labels]
 
         data = {}
+        data['image']=image
         data['sort']=sort
         data['title'] = title
         data['labels'] = self.get_argument('labels')
@@ -247,33 +236,15 @@ class UpdateArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def post(self, id):
         title = self.get_argument('title')
+        image=self.get_argument('image')
         content_md = self.get_argument('content')
         sort = self.get_argument('sort')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = str(markdown.markdown(content_md, ['codehilite']))
-        #更新封面-----------------------------------------------------------------
+        
         try:
-            file_metas = self.request.files["image"]
-            if os.path.isfile(os.path.join('static/article',options.oldimage)):
-                os.remove(os.path.join('static/article', options.oldimage))
-            for meta in file_metas:
-                filename = title
-                filepath = os.path.join('static/article', title)
-                if not os.path.isfile(filepath):
-                # 有些文件需要已二进制的形式存储，实际中可以更改
-                    with open(filepath, 'wb') as up:
-                        up.write(meta['body'])
-
-        except:
-            if str(title)==options.oldimage:
-                pass
-            else:
-                if os.path.isfile(os.path.join('static/article',options.oldimage)):
-                    os.rename(os.path.join('static/article',options.oldimage), os.path.join('static/article',title))
-        #更新封面-----------------------------------------------------------------
-        try:
-            Article.update(self.db, id, title, content_md.replace('\"','\''), content_html.replace('\"','\''),sort)
+            Article.update(self.db, id, title, content_md.replace('\"','\''), content_html.replace('\"','\''),sort,image)
             Label.deleteAll(self.db, id)
             for label in labels:
                 detail = label[1:-1].strip()
@@ -295,14 +266,14 @@ class CreateArticleHandler(BaseHandler):
         title = self.get_argument('title')
         content_md = self.get_argument('content')
         sort = self.get_argument('sort')
-
+        image=self.get_argument('image')
         pattern = r'\[[^\[\]]+\]'
         labels = re.findall(pattern, self.get_argument('labels'))
         content_html = str(markdown.markdown(content_md, ['codehilite']))
         strinfo = re.compile('%')
         new_html = strinfo.sub('%%',content_html)
         new_md = strinfo.sub('%%',content_md)
-        article_id = Article.create(self.db, title, new_md.replace('\"','\''), new_html.replace('\"','\''),sort)   
+        article_id = Article.create(self.db, title, new_md.replace('\"','\''), new_html.replace('\"','\''),sort,image)   
         for label in labels:
             detail = label[1:-1].strip()
             Label.create(self.db, article_id, detail)

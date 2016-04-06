@@ -33,6 +33,7 @@
         <div class="hidden">
             <form action="createArticle" method="post">
                 {% module xsrf_form_html() %}
+                <input type="text" name="image" value="{{ escape(data["image"]) }}" />
                 <input type="text" name="sort" value="{{ escape(data["sort"]) }}" />
                 <input type="text" name="title" value="{{ escape(data["title"]) }}" />
                 <input type="text" name="labels" value="{{ escape(data["labels"]) }}" />
