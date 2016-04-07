@@ -1,5 +1,5 @@
 #!/usr/bin/python
-  
+#-*- coding:utf-8 -*-
 __doc__ = """Tiny HTTP Proxy.
   
 This module implements GET, HEAD, POST, PUT and DELETE methods
@@ -307,7 +307,7 @@ def main ():
     else:
         logger.log (logging.INFO, "Any clients will be served...")
   
-    server_address = (socket.gethostbyname (local_hostname), port)
+    server_address = ('127.0.0.1', port)
     ProxyHandler.protocol = "HTTP/1.0"
     #多线程服务器实例化，传入logger记录-------------------------------------------------
     httpd = ThreadingHTTPServer (server_address, ProxyHandler, logger)
