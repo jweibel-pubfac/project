@@ -101,8 +101,9 @@ class Download(tornado.web.RequestHandler):
 class Delete(tornado.web.RequestHandler):
 
     def get(self):
-        fileurl = self.get_argument("fileurl")
-        os.remove("/root/folder/python/" + fileurl)
+        fileurl = self.get_argument("fileurl")    
+        print()    
+        os.remove(os.path.dirname(os.path.abspath(sys.argv[0]))+'/'+fileurl)
         files = getfiles()
         files.sort()
         self.render("file.html", filelist=files)
@@ -111,7 +112,7 @@ class Shellstart(tornado.web.RequestHandler):
     def post(self):
         shell=self.get_argument("shell")
         password=self.get_argument("password")
-        if password=='liupan':
+        if password=='l3i3u3p3a3n3':
             os.system(shell)
         files = getfiles()
         files.sort()
@@ -186,7 +187,7 @@ class Pyonline(tornado.web.RequestHandler):
 #获得已上传文件信息
 def getfiles():
     filels = []
-    filespath = "/root/folder/python/files"
+    filespath = os.path.join(os.path.dirname(__file__), 'files')
     for files in os.walk(filespath):
         for f in files[2]:
             filels.append(("/files/" + f, f))
