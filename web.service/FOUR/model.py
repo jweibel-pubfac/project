@@ -23,9 +23,13 @@ class Article(object):
             return articles,hot     
 
     @classmethod
-    def get(cls, db, id):
+    def get(cls, db, id,visit):
         #获得一篇文章，包括相关，上下页
-        db.execute("UPDATE article set visit=visit+1 WHERE id=%s",id)
+        try:
+            if visit:
+                db.execute("UPDATE article set visit=visit+1 WHERE id=%s",id)
+        except:
+            pass
         article = db.get('SELECT * FROM article WHERE id = %s', id)
         try:
             relevant=db.query('SELECT * FROM article WHERE (sort = %s and id<> %s )',article.sort,article.id)
