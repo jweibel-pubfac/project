@@ -230,7 +230,7 @@ class DeleteHandler(BaseHandler):
 class EditArticleHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self, id):
-        article,up,dn,relevant = Article.get(self.db, id)
+        article,up,dn,relevant = Article.get(self.db, id,False)
         if article is None:
             error = '404: Page Not Found'
             self.render('error.html', error=error, home_title=options.home_title)
