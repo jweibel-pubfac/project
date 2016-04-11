@@ -153,7 +153,8 @@ class ProgramHandler(BaseHandler):
         page = p.page(nowpage)
         isAdmin = self.isAdmin()
         self.render('program.html',isAdmin=isAdmin,total=total,page_count=page_count,
-                     nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,security=searticle,home_title=options.home_title)
+                     nowpage=now,hots=hot,hottotal=hottotal,python=pyarticle,js=jsarticle,
+                     security=searticle,home_title=options.home_title)
 class HomeHandler(BaseHandler):
     def get(self):
         nowpage = int(self.get_argument('page', '1'))
