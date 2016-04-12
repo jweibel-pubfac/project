@@ -91,7 +91,7 @@
    {%end%}
 
 <!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key={{ article.id }} data-title={{ article.title }} data-url="article/{{ article.id }}"></div>
+	<div class="ds-thread" data-thread-key={{ article.id }} data-title={{ escape(article.title) }} data-url="http://www.hackerl.com/article/{{ article.id }}"></div>
 <!-- 多说评论框 end -->
 
 
