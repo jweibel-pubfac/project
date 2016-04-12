@@ -235,6 +235,13 @@ aside { width: 27%; background: url(../images/ibodybg.png) -170px -147px no-repe
     margin-top: 25px;
 }
 
+#ds-recent-visitors .ds-avatar {
+    display: inline;
+    float: left;
+    margin: 4px !important;
+    padding: 0 !important;
+}
+
 .space {
     display: inline-block;
     width: 30px;
