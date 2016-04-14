@@ -121,11 +121,11 @@ class Auth(object):
 class Search(object):
     @classmethod
     def all(cls, db, key):
-        results = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort\
+        results = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort,a.image\
                 FROM article a, label l \
                 WHERE a.id = l.article_id AND l.detail = %s \
                 ORDER BY time DESC', key)
-        hot = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort\
+        hot = db.query('SELECT a.id, a.title, a.content_md, a.content_html, a.time ,a.visit,a.sort,a.image\
                 FROM article a, label l \
                 WHERE a.id = l.article_id AND l.detail = %s \
                 ORDER BY visit DESC', key)
