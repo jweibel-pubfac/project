@@ -1,4 +1,4 @@
-# python_project
+# project
 Web:<br>
 > ONE：tornado框架所写的个人网站<br>
 > 支持上传文件至服务器，删除与下载<br>
