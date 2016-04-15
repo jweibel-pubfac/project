@@ -18,6 +18,7 @@ from tornado.options import define, options
 import sys
 from threading import Timer  
 
+#系统默认编码为ascii，此处设置默认为utf-8
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
