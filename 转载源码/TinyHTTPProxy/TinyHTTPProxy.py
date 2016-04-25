@@ -269,7 +269,7 @@ def main ():
     logfile = None
     daemon  = False
     max_log_size = 20
-    port = 8000
+    port = 443
     allowed = []
     run_event = threading.Event ()
     local_hostname = socket.gethostname ()
@@ -307,7 +307,7 @@ def main ():
     else:
         logger.log (logging.INFO, "Any clients will be served...")
   
-    server_address = ('127.0.0.1', port)
+    server_address = ('0.0.0.0', port)
     ProxyHandler.protocol = "HTTP/1.0"
     #多线程服务器实例化，传入logger记录-------------------------------------------------
     httpd = ThreadingHTTPServer (server_address, ProxyHandler, logger)

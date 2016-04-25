@@ -7,7 +7,7 @@ from random import randrange, choice
 
 SCREEN_WIDTH = 480
 SCREEN_HEIGHT = 800
-vita=6
+vita=16
 #生命数
 
 #定义玩家、敌机类     -----------------------------------------------------------------------------
