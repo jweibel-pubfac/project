@@ -1,0 +1,67 @@
+@charset "gb2312";
+/* media css Document */
+@media screen and (max-width:823px) {
+.ibody { background: url(../images/ms8.png) top right no-repeat #FFF; width: 90%; margin: auto; box-shadow: 0px 2px 5px #666; }
+article { float: none; width: 100% }
+article { background: #fff }
+header { background: url(../images/ms8.png) top right no-repeat #FFF; }
+aside, .dateview { display: none }
+nav { padding-left: 0; text-align: center }
+nav a { padding: 0 5px; }
+.banner { background-size: auto; height: 130px; font-size: 12px; font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif; }
+.texts { line-height: 36px; padding: 20px 0 0 10px; text-shadow: 1px 1px rgba(255,255,255,0.3); }
+.blogs::after { background: none }
+.autor span { margin: 0 5px; }
+.blogs figure { width: 35%; }
+.blogs ul { width: 62%; }
+}
+@media screen and (max-width:598px) {
+.ibody { background: url(../images/ms8.png) top right no-repeat #FFF; width: 90%; margin: auto; box-shadow: 0px 2px 5px #666; }
+article { float: none; width: 100% }
+article { background: #fff }
+header { background: url(../images/ms8.png) top right no-repeat #FFF; }
+aside, header h1, header h2, .dateview { display: none }
+nav { height: auto; line-height: 40px; text-align: center; background: #FFF; padding-left: 0px }
+nav a { display: block; background: #323232; clear: both; margin-bottom: 2px }
+.logo { position: static; margin: 0 auto 10px }
+.banner { background-size: auto; height: 130px; font-size: 12px; font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif; }
+.texts { line-height: 36px; padding: 20px 0 0 10px; text-shadow: 1px 1px rgba(255,255,255,0.3); }
+.blogs::after { background: none }
+.autor span { margin: 0 5px; }
+.blogs figure { width: 35%; }
+.blogs ul { width: 62%; }
+}
+@media screen and (max-width:480px) {
+.ibody { width: 90%; margin: auto; box-shadow: 0px 2px 5px #666; }
+article { float: none; width: 100% }
+article { background: #fff }
+header { background: url(../images/ms8.png) top right no-repeat #FFF; }
+aside, header h1, header h2, .dateview, .banner, .bloglist h2, .blogs figure img, .newblog figure img, .newblog .autor { display: none }
+nav { height: auto; line-height: 40px; text-align: center; background: #FFF; padding-left: 0px }
+nav a { display: block; background: #323232; clear: both; margin-bottom: 2px }
+.logo { position: static; margin: 0 auto 10px }
+.texts { line-height: 36px; padding: 20px 0 0 10px; text-shadow: 1px 1px rgba(255,255,255,0.3); }
+.blogs::after, .newblog::after { background: none }
+.autor span { margin: 0; }
+.blogs figure { width: 100%; float: none; }
+.blogs ul, .newblog ul { width: 100%; float: none; }
+.blogs { margin: 0 10px 10px 10px; }
+}
+blockquote{background-color: RGB(248,248,248);padding:0 0 0 15px;margin:0 30 10px;border-left:3px solid #888888}
+blockquote p{margin-bottom:0;font-size:15px;font-weight:300;line-height:25px}
+blockquote small{display:block;line-height:20px;color:#999}
+blockquote small:before{content:'\2014 \00A0'}
+blockquote.pull-right{float:right;padding-right:15px;padding-left:0;border-right:5px solid #eee;border-left:0}
+blockquote.pull-right p,blockquote.pull-right small{text-align:right}
+blockquote.pull-right small:before{content:''}
+blockquote.pull-right small:after{content:'\00A0 \2014'}
+q:before,q:after,blockquote:before,blockquote:after{content:""}
+
+.content_html a{color:#4A89DC;text-decoration:none;}  
+.content_html a:hover{color:#4A89DC;text-decoration:underline;}
+.content_html h1{color:#656D78;font-size:30px;line-height:40px}
+.content_html h2{color:#FFCE54;font-size:24px;line-height:40px}
+.content_html h3{color:#6abfd4;font-size:20px;line-height:40px}
+.content_html h4{color:#FC6E51;font-size:18px;line-height:20px}
+.content_html h5{color:#EC87C0;font-size:14px;line-height:20px}
+.content_html h6{color:#ED5565;font-size:12px;line-height:20px}

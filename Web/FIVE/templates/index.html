@@ -1,0 +1,62 @@
+
+<html>
+	<head>
+<meta charset="utf-8">
+		<title>琴行登记系统</title>
+    </head>
+
+	<btudent in students %}dy>       
+        {% if isAdmin %}
+        ID&nbsp&nbsp&nbsp姓名&nbsp&nbsp&nbsp学院&nbsp&nbsp&nbsp乐器&nbsp&nbsp&nbsp老师&nbsp&nbsp&nbsp学时&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp电话&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspQQ<br>
+        {% for student in students %}
+        {{ student.id }}&nbsp&nbsp&nbsp  {{ student.name }} &nbsp&nbsp&nbsp{{ student.major }}&nbsp&nbsp&nbsp{{ student.sort }}&nbsp&nbsp&nbsp{{ student.teacher }}&nbsp&nbsp&nbsp{{ student.class_hour }}&nbsp&nbsp&nbsp{{ student.telephone }}&nbsp&nbsp&nbsp{{ student.qq }}
+        <a href="/delete/{{ student.id }}">删除</a>
+        <br>
+        {% end %}
+        {% else %}
+
+
+<div class="login">
+    <form action="/" class="login-form" method="post">
+        {% module xsrf_form_html() %}
+        <div class="form-lineitem">
+            <label for="name">姓名:</label>
+            <input type="text" id="name" name="name" />
+        </div>
+        <div class="form-lineitem">
+            <label for="major">学院:</label>
+            <input type="text" id="major" name="major" />
+        </div>
+
+        <div class="form-lineitem">
+            <label for="sort">乐器:</label>
+            <input type="text" id="sort" name="sort" />
+        </div>
+        <div class="form-lineitem">
+            <label for="teacher">老师:</label>
+            <input type="text" id="teacher" name="teacher" />
+        </div>
+        <div class="form-lineitem">
+            <label for="class_hour">学时:</label>
+            <input type="text" id="class_hour" name="class_hour" />
+        </div>
+        <div class="form-lineitem">
+            <label for="major">电话:</label>
+            <input type="text" id="major" name="telephone" />
+        </div>
+        <div class="form-lineitem">
+            <label for="qq">QQ:</label>
+            <input type="text" id="qq" name="qq" />
+        </div>
+
+        <div class="form-lineitem">
+            <p>
+                <button class="btn btn-primary" type="submit">提交</button>
+                <button class="btn btn-primary" type="button" onclick="home();">取消</button>
+            </p>
+        </div>
+
+        </form>
+        {% end %}
+    </body>
+</html>
