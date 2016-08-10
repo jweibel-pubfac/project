@@ -28,6 +28,7 @@ class Application(tornado.web.Application):
     def __init__(self):
         handlers = [
             (r'/', HomeHandler),
+            (r'/student', StudentHandler),
             (r'/edit/(\d+)', EditHandler),
             (r'/delete/(\d+)', DeleteHandler),
             (r'/update/(\d+)', UpdateHandler),
@@ -118,9 +119,7 @@ class UpdateHandler(BaseHandler):
 #首页
 class HomeHandler(BaseHandler):
     def get(self):
-        isAdmin = self.isAdmin()
-        students=Student.all(self.db)
-        self.render('index.html',students=students,isAdmin = isAdmin)
+        self.render('index.html')
 
     def post(self):
         name = self.get_argument('name')
@@ -130,13 +129,30 @@ class HomeHandler(BaseHandler):
         class_hour=self.get_argument('class_hour')
         telephone=self.get_argument('telephone')
         qq=self.get_argument('qq')
-        Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
-        Student.new(self.db)
-        try:
-            self.render('success.html')
-        except:
-            error = "The post data invalid"
+        password=self.get_argument('pass')
+        if (password=='123654'):
+            try:
+                Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
+                Student.new(self.db)
+                self.render('success.html')
+            except:
+                error = "The post data invalid"
+                self.render('error.html', error=error, home_title=options.home_title)
+        else:
+            error = "Password error"
             self.render('error.html', error=error, home_title=options.home_title)
+
+
+class StudentHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        students=Student.all(self.db)
+        if students is None:
+            error = '404: Page Not Found'
+            self.render('error.html', error=error, home_title=options.home_title)
+        else:
+            self.render('student.html', students=students)
+
 
 class LoginHandler(BaseHandler):
     def get(self):

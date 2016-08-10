@@ -1,0 +1,8 @@
+<meta charset="utf-8">
+		<title>学员信息</title>
+        ID&nbsp&nbsp&nbsp姓名&nbsp&nbsp&nbsp学院&nbsp&nbsp&nbsp乐器&nbsp&nbsp&nbsp老师&nbsp&nbsp&nbsp学时&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp电话&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspQQ<br>
+        {% for student in students %}
+        {{ student.id }}&nbsp&nbsp&nbsp  {{ student.name }} &nbsp&nbsp&nbsp{{ student.major }}&nbsp&nbsp&nbsp{{ student.sort }}&nbsp&nbsp&nbsp{{ student.teacher }}&nbsp&nbsp&nbsp{{ student.class_hour }}&nbsp&nbsp&nbsp{{ student.telephone }}&nbsp&nbsp&nbsp{{ student.qq }}
+        <a href="/delete/{{ student.id }}">删除</a>
+        <br>
+        {% end %}

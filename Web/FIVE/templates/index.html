@@ -1,62 +1,147 @@
-
-<html>
-	<head>
+CTYPE html>
+<html><head>
 <meta charset="utf-8">
-		<title>琴行登记系统</title>
-    </head>
+<title>
+艺梦琴行</title>
 
-	<btudent in students %}dy>       
-        {% if isAdmin %}
-        ID&nbsp&nbsp&nbsp姓名&nbsp&nbsp&nbsp学院&nbsp&nbsp&nbsp乐器&nbsp&nbsp&nbsp老师&nbsp&nbsp&nbsp学时&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp电话&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspQQ<br>
-        {% for student in students %}
-        {{ student.id }}&nbsp&nbsp&nbsp  {{ student.name }} &nbsp&nbsp&nbsp{{ student.major }}&nbsp&nbsp&nbsp{{ student.sort }}&nbsp&nbsp&nbsp{{ student.teacher }}&nbsp&nbsp&nbsp{{ student.class_hour }}&nbsp&nbsp&nbsp{{ student.telephone }}&nbsp&nbsp&nbsp{{ student.qq }}
-        <a href="/delete/{{ student.id }}">删除</a>
-        <br>
-        {% end %}
-        {% else %}
+<!-- Meta Tags -->
+<meta name="robots" content="index, follow">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><script src="{{static_url("Wufoo/750e9545e9")}}" type="text/javascript"></script><script src="{{static_url("Wufoo/prum.js")}}" async=""></script>
+<script src="{{static_url("Wufoo/live.js")}}" async="" type="text/javascript"></script>
+<script src="{{static_url("Wufoo/fbevents.js")}}" async=""></script>
+<script src="{{static_url("Wufoo/rqe7246bq0.js")}}" type="text/javascript"></script><script src="{{static_url("Wufoo/nr-963.js")}}"></script><script src="{{static_url("Wufoo/tag")}}" type="text/javascript"></script><script src="{{static_url("Wufoo/tag.js")}}" async=""></script><script src="{{static_url("Wufoo/ga.js")}}" async="" type="text/javascript"></script>
+<!-- CSS -->
+<link href="{{static_url("Wufoo/index.css")}}" rel="stylesheet">
+<link href="{{static_url("Wufoo/index_002.css")}}" rel="stylesheet">
 
+</head>
 
-<div class="login">
-    <form action="/" class="login-form" method="post">
+<body id="public" class="login"><iframe style="width: 0px; height: 0px; border: 0px none; position: absolute; left: -2000px;" id="__cvo_iframe" src='javascript:""'></iframe>
+
+<div id="overlay"></div>
+<div id="lightbox" class="done" style="visibility: visible; margin-top: -212.5px; margin-left: -411px;">
+<div id="lbContent" class="clearfix">
+
+			<form id="loginForm" name="f" action="/" method="post">
+    <ul>
         {% module xsrf_form_html() %}
-        <div class="form-lineitem">
-            <label for="name">姓名:</label>
-            <input type="text" id="name" name="name" />
+<li>
+        <div>
+            <label class="desc" for="name">姓名:</label>
+            <input type="text" class="field text large" id="name" name="name" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="major">学院:</label>
+            <input type="text" class="field text large" id="major" name="major" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="sort">乐器:</label>
+            <input type="text" class="field text large" id="sort" name="sort" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="teacher">老师:</label>
+            <input type="text" class="field text large" id="teacher" name="teacher" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="class_hour">学时:</label>
+            <input type="text" class="field text large" id="class_hour" name="class_hour" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="major">电话:</label>
+            <input type="text" class="field text large" id="major" name="telephone" />
+        </div></li>
+<li>
+        <div>
+            <label class="desc" for="qq">QQ:</label>
+            <input type="text" class="field text large" id="qq" name="qq" />
         </div>
-        <div class="form-lineitem">
-            <label for="major">学院:</label>
-            <input type="text" id="major" name="major" />
-        </div>
+</li>
+        <li>
+            <div>
+                <label class="desc" for="pass">Password</label>
+                <input id="pass" name="pass" class="field text large" value="" type="password">
+            </div>
+                    </li>
+        <li>
+        </li>
+        <li class="">
+            <button type="submit" id="saveForm" class="button">
+                <img src="{{static_url("Wufoo/door_in.png")}}" alt=""> Sign Up
+            </button>
+        </li>
+    </ul>
+   <br>
+</form>
 
-        <div class="form-lineitem">
-            <label for="sort">乐器:</label>
-            <input type="text" id="sort" name="sort" />
-        </div>
-        <div class="form-lineitem">
-            <label for="teacher">老师:</label>
-            <input type="text" id="teacher" name="teacher" />
-        </div>
-        <div class="form-lineitem">
-            <label for="class_hour">学时:</label>
-            <input type="text" id="class_hour" name="class_hour" />
-        </div>
-        <div class="form-lineitem">
-            <label for="major">电话:</label>
-            <input type="text" id="major" name="telephone" />
-        </div>
-        <div class="form-lineitem">
-            <label for="qq">QQ:</label>
-            <input type="text" id="qq" name="qq" />
-        </div>
+<div id="noaccount">
+    <a href="https://secure.wufoo.com/signup/1/">
+        <h2>艺梦琴行<b>学员登记</b>
+            <span>Create one now.</span> <b>It's interesting!</b></h2>
+    </a>
+</div>
+	
+	<noscript>
+		<style type="text/css">
+		
+		#lightbox form, #noaccount{display:none;}
+		#lbContent{visibility:visible !important}
+		
+		</style>
 
-        <div class="form-lineitem">
-            <p>
-                <button class="btn btn-primary" type="submit">提交</button>
-                <button class="btn btn-primary" type="button" onclick="home();">取消</button>
-            </p>
-        </div>
+		<h2 class="error">Oh no! Wufoo needs JavaScript!</h2>
+		<h3>Sorry, Wufoo's Admin interface can only work on a JavaScript enabled browser.</h3>
+	</noscript>
+</div>
+</div>
 
-        </form>
-        {% end %}
-    </body>
-</html>
+<!-- JavaScript -->
+<script type="text/javascript">
+SETUSERCOOKIE = 1;
+</script>
+
+<script src="{{static_url("Wufoo/dynamic-1-7.js")}}"></script>
+<script src="{{static_url("Wufoo/dynamic.js")}}"></script>
+<!-- Google Analytics -->
+<script type="text/javascript">
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-621688-1']);
+_gaq.push(['_setDomainName', 'auto']);
+_gaq.push(['_setAllowLinker', true]);
+
+if (undefined !== window.SETUSERCOOKIE) _gaq.push(['_setVar', 'current_user']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+</script>
+
+
+<!-- Brighttag -->
+<script>
+  (function () {
+    var tagjs = document.createElement("script");
+    var s = document.getElementsByTagName("script")[0];
+    tagjs.async = true;
+    tagjs.src = "//s.btstatic.com/tag.js#site=mDhyNu2";
+    s.parentNode.insertBefore(tagjs, s);
+  }());
+</script>
+<noscript>
+  <iframe src="//s.thebrighttag.com/iframe?c=mDhyNu2" width="1" height="1" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+</noscript>
+
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"750e9545e9","applicationID":"29651914","transactionName":"blABZhZZVkdUBhdbXVcaNkANF1RbUgwNHVtXUQZKSlBMWVk=","queueTime":0,"applicationTime":20,"atts":"QhcCEF5DRUk=","errorBeacon":"bam.nr-data.net","agent":""}</script>
+
+
+
+<iframe src="{{static_url("Wufoo/activityi.html")}}" scrolling="no" style="display: none;" height="1px" width="1px"></iframe>
+<img src="{{static_url("Wufoo/tp.gif")}}" border="0" height="1" width="1"></body></html>
+
