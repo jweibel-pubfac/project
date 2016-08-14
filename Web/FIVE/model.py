@@ -13,10 +13,18 @@ class Student(object):
         return students
     @classmethod
     def get(cls, db, id):
-        #获得一篇文章，包括相关，上下页
         student = db.get('SELECT * FROM student WHERE id = %s', id)
         return student
+    @classmethod
+    def sign(cls, db, name):
+        student = db.get('SELECT * FROM student WHERE name = %s', name)
+        return student
 
+    @classmethod
+    def hour(cls, db, name):
+        db.execute("UPDATE student set class_hour=class_hour-1 WHERE name=%s",name)
+        student = db.get('SELECT * FROM student WHERE name = %s', name)
+        return student
 
     @classmethod
     def create(cls, db, name, major, sort,teacher,class_hour,telephone,qq):

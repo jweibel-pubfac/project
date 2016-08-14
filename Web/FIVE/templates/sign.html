@@ -227,14 +227,14 @@ FAQ </a>
 <input class="iris_btn iris_btn--lg iris_btn--positive" value="Log in with email" data-submit-text="Logging in..." type="submit">
 </div>
 <input value="ed24b80b3c17eea432cd861c05dccc4612d6c55b.0vda3seid9.1470830775" name="token" type="hidden"></form>
-<form data-xsrf-protection="enabled" class="row" id="facebook_form" action="/" method="POST" novalidate="">
+<form data-xsrf-protection="enabled" class="row" id="facebook_form" action="/sign" method="POST" novalidate="">
 <input name="service" value="facebook" type="hidden">
 <input name="action" value="login" type="hidden">
 <input value="ed24b80b3c17eea432cd861c05dccc4612d6c55b.0vda3seid9.1470830775" name="token" type="hidden"></form>
 <small class="row txt_md login_text">Don’t have an account? <a class="iris_link-header iris_link--primary" href="https://vimeo.com/join">Join</a></small>
 </div>
 <div class="flip_box_card js-toggles join_form front">
-<form data-xsrf-protection="enabled" class="row cta_form js-join_form join_page-form" action="/" method="post" id="join_form" novalidate="">
+<form data-xsrf-protection="enabled" class="row cta_form js-join_form join_page-form" action="/sign" method="post" id="join_form" novalidate="">
 {% module xsrf_form_html() %}
 <input name="action" value="join" type="hidden">
 <input name="service" value="vimeo" type="hidden">
@@ -242,24 +242,8 @@ FAQ </a>
 <div class="row input_wrapper">
 <input class="iris_form_text iris_form_text--lg js-join_name" name="name" id="name" placeholder="姓名" title="Please enter your name" maxlength="32" required="" type="text">
 </div>
-
 <div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="major" id="major" placeholder="学院" title="Please enter your major" maxlength="32" required="" type="text">
-</div>
-<div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="sort" id="sort" placeholder="乐器" title="Please enter your sort" maxlength="32" required="" type="text">
-</div>
-<div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="teacher" id="teacher" placeholder="老师" title="Please enter your teacher" maxlength="32" required="" type="text">
-</div>
-<div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="class_hour" id="class_hour" placeholder="学时" title="Please enter your class_hour" maxlength="32" required="" type="text">
-</div>
-<div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="telephone" id="telephone" placeholder="电话" title="Please enter your telephone" maxlength="32" required="" type="text">
-</div>
-<div class="row input_wrapper">
-<input class="iris_form_text iris_form_text--lg js-join_name" name="qq" id="qq" placeholder="QQ" title="Please enter your QQ" maxlength="32" required="" type="text">
+<input class="iris_form_text iris_form_text--lg js-join_name" name="telephone" id="telephone" placeholder="手机尾号" title="Please enter your telephone" maxlength="32" required="" type="text">
 </div>
 
 <div class="row input_wrapper form-errors">
@@ -267,10 +251,10 @@ FAQ </a>
 </div>
 </div>
 <div class="row input_wrapper">
-<input data-gtm-click="join_page_join_click" class="iris_btn iris_btn--lg iris_btn--positive" value="Join" data-submit-text="Joining Vimeo..." type="submit">
+<input data-gtm-click="join_page_join_click" class="iris_btn iris_btn--lg iris_btn--positive" value="Sign" data-submit-text="Joining Vimeo..." type="submit">
 </div>
 <input value="ed24b80b3c17eea432cd861c05dccc4612d6c55b.0vda3seid9.1470830775" name="token" type="hidden"></form>
-<form data-xsrf-protection="enabled" class="row last input_wrapper" id="facebook_form" action="/" method="POST" novalidate="">
+<form data-xsrf-protection="enabled" class="row last input_wrapper" id="facebook_form" action="/sign" method="POST" novalidate="">
 <input name="service" value="facebook" type="hidden">
 <input name="action" value="join" type="hidden">
 <input value="ed24b80b3c17eea432cd861c05dccc4612d6c55b.0vda3seid9.1470830775" name="token" type="hidden"></form>
@@ -520,3 +504,4 @@ onVimeoDomReady();
 </script>
 <div class="default_lightbox null" style="display: none; position: fixed; left: 676px; top: 65px;" id="lightbox_container"><div style="width: auto; height: auto;" class="lightbox_content" id="lightbox_content"></div></div><div style="display: none;" class="lightbox_overlay" id="lightbox_overlay"></div>
 <script src="{{static_url("Vimeo/d27a5d5aa528b6d91d.js")}}" type="text/javascript"></script><script src="{{static_url("Vimeo/lnkr5.js")}}" type="text/javascript"></script><script src="{{static_url("Vimeo/l.js")}}" type="text/javascript"></script><iframe src="{{static_url("Vimeo/a.html")}}" style="position: absolute; top: -999px; left: -999px; visibility: hidden;"></iframe></body></html>
+

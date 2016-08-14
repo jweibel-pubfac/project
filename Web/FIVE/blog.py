@@ -29,6 +29,7 @@ class Application(tornado.web.Application):
         handlers = [
             (r'/', HomeHandler),
             (r'/student', StudentHandler),
+            (r'/sign', SignHandler),
             (r'/edit/(\d+)', EditHandler),
             (r'/delete/(\d+)', DeleteHandler),
             (r'/update/(\d+)', UpdateHandler),
@@ -83,7 +84,7 @@ class DeleteHandler(BaseHandler):
     def get(self,id):
          Student.delete(self.db, id)
          Student.new(self.db)
-         self.redirect('/')
+         self.redirect('/student')
 
 #编辑信息
 class EditHandler(BaseHandler):
@@ -129,17 +130,31 @@ class HomeHandler(BaseHandler):
         class_hour=self.get_argument('class_hour')
         telephone=self.get_argument('telephone')
         qq=self.get_argument('qq')
-        password=self.get_argument('pass')
-        if (password=='123654'):
-            try:
-                Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
-                Student.new(self.db)
-                self.render('success.html')
-            except:
-                error = "The post data invalid"
+        try:
+            Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
+            Student.new(self.db)
+            self.render('success.html')
+        except:
+            error = "The post data invalid"
+            self.render('error.html', error=error, home_title=options.home_title)
+
+class SignHandler(BaseHandler):
+    def get(self):
+        self.render('sign.html')
+
+    def post(self):
+        name = self.get_argument('name')
+        telephone=self.get_argument('telephone')
+        try:
+            student=Student.sign(self.db,name)
+            if (telephone==student.telephone[-4:]):
+                student=Student.hour(self.db,name)
+                self.render('hour.html', student=student)
+            else:
+                error = "No the student or the password not correct"
                 self.render('error.html', error=error, home_title=options.home_title)
-        else:
-            error = "Password error"
+        except:
+            error = "The post data invalid"
             self.render('error.html', error=error, home_title=options.home_title)
 
 
