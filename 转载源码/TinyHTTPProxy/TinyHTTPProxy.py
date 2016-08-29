@@ -269,7 +269,7 @@ def main ():
     logfile = None
     daemon  = False
     max_log_size = 20
-    port = 443
+    port = 8080
     allowed = []
     run_event = threading.Event ()
     local_hostname = socket.gethostname ()

@@ -131,9 +131,13 @@ class HomeHandler(BaseHandler):
         telephone=self.get_argument('telephone')
         qq=self.get_argument('qq')
         try:
-            Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
-            Student.new(self.db)
-            self.render('success.html')
+            if (name!=null and major!=null and sort!=null and teacher!=null and class_hour!=null and telephone!=null and qq!=null):
+                Student.create(self.db, name, major, sort,teacher,class_hour,telephone,qq)
+                Student.new(self.db)
+                self.render('success.html')
+            else:
+                error = "The post data invalid"
+                self.render('error.html', error=error, home_title=options.home_title)       
         except:
             error = "The post data invalid"
             self.render('error.html', error=error, home_title=options.home_title)
